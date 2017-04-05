@@ -15,10 +15,7 @@ namespace ConsoleGame
         public int HealthPoints { get; set; }
         public int Speed { get; set; }
         public CharacterType Type { get; set; }
-
-        public int Attack1Damage { get; set; }
-        public int Attack2Damage { get; set; }
-        public int Attack3Damage { get; set; }
+        public bool IsAI { get; set; }
 
         public Dictionary<string, int> Attacks {get; set;}
         public Dictionary<string, int> SpecialAttacks { get; set; }
