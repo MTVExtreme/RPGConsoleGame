@@ -77,6 +77,8 @@ namespace ConsoleGame
             "lummox"
         };
 
+        public string Type { get; set; }
+
 
         public RandomEnemy(Random rnd)
         {
@@ -89,7 +91,8 @@ namespace ConsoleGame
 
             this.Speed = speed;
             this.HealthPoints = hp;
-            this.Name = name + " " + type;
+            this.Type = type;
+            this.Name = name;
         }
 
         public void RandomAttack(PlayerClass p)

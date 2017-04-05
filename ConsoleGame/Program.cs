@@ -13,7 +13,7 @@ namespace ConsoleGame
         public static PlayerClass player2;
         public static PlayerClass player3;
 
-        public static string Version = "0.3.4";
+        public static string Version = "0.4.0";
         #endregion
         static void Main(string[] args)
         {
@@ -49,6 +49,7 @@ namespace ConsoleGame
 
                 #region Player Stats
                 Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Your Party's Stats");
                 Console.WriteLine("_____________________________________________________________________________");
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.White;
@@ -63,13 +64,15 @@ namespace ConsoleGame
 
 
                 Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Enemy's Stats");
                 Console.WriteLine("_____________________________________________________________________________");
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.White;
                     foreach(var count in enemyList)
                 {
-                    Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3}", count.Value.Name, count.Value.HealthPoints, count.Value.Speed);
+                    Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3}", count.Value.Name, count.Value.Type, count.Value.HealthPoints, count.Value.Speed);
                 }
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("_____________________________________________________________________________");
                 Console.ReadLine();
 
