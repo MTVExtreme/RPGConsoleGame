@@ -26,7 +26,7 @@ namespace ConsoleGame
 "Iarda",    "Uwari",    "Emt",    "Oldt",    "Dienn",    "Sluiy",    "Ychay",
 "Ashm",    "Rhiend",    "Ia",    "Othery",    "Aumi",    "Polk",    "Oaughi",
 "Ikimi",    "Rads",    "Uwori",    "Rodd",    "Oawi",    "Kelv",    "Otinu",
-"Maek",    "Oghai",    "Aechi",    "Ylyea",    "Ustn",    "Uache",    "Denck",
+"Maek",    "Oghai",    "Aechi",    "Ylyea",    "Ustn",    "Uache",    "Dank",
 "Danl",    "Croud",    "Yelmi",    "Oemu",    "Wous",    "Poif",
 "Kam",    "Ewary",    "Bant",    "Yerl",    "Eisi",    "Asayo",    "Radm",
 "Rakq",    "Edena",    "Enthph",    "Delb",    "Hatnn",    "Thernd",    "Samc",

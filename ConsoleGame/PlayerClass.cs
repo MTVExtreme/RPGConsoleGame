@@ -50,6 +50,8 @@ namespace ConsoleGame
                 num++;
                 Console.WriteLine("{0}: {1}", num, attack.Key);
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("99: Back");
         }
 
         public virtual void ReadSpecialAttacks()
@@ -57,13 +59,15 @@ namespace ConsoleGame
             int num = 0;
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Attacks:");
-            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Special Attacks:");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             foreach (var attack in SpecialAttacks)
             {
                 num++;
                 Console.WriteLine("{0}: {1}", num, attack.Key);
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("99: Back");
         }
 
         public override string ToString()
@@ -85,19 +89,15 @@ namespace ConsoleGame
 
         public abstract int GetExtraStatValue();
 
-        //public virtual string Attack1()
-        //{
-        //    return $"{this.Name} attacked (Enemy) using (attack) for {Attack1Damage}";
-        //}
+        public void Attack(RandomEnemy player, Dictionary<string, int> dict, Object enemyName)
+        {
 
-        //public virtual string Attack2()
-        //{
-        //    return $"{this.Name} attacked (Enemy) using (attack) for {Attack1Damage}";
-        //}
 
-        //public virtual string Attack3()
-        //{
-        //    return $"{this.Name} attacked (Enemy) using (attack) for {Attack1Damage}";
-        //}
+            var singleAttack = attacks.ElementAt(0);
+            int attackVal = singleAttack.Value;
+            string attackName = singleAttack.Key;
+
+            Console.WriteLine("{3} Attack {0} with {1} for {2} damage", player.Name, attackName, attackVal, this.Name);
+        }
     }
 }
