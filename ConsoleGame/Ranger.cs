@@ -35,6 +35,16 @@ namespace ConsoleGame
             return $"The {this.Type} {this.Name} of {this.Faction} => Health Points: {this.HealthPoints} || Speed: {this.Speed} || Ammo: {this.Ammo}";
         }
 
+        public override string GetExtraStat()
+        {
+            return "Ammo";
+        }
+
+        public override int GetExtraStatValue()
+        {
+            return this.Ammo;
+        }
+
 
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ConsoleGame
 {
 
-    class PlayerClass
+    abstract class PlayerClass
     {
         public string Name { get; set; }
         public string Faction { get; set; }
@@ -70,6 +70,20 @@ namespace ConsoleGame
         {
             return $"The {this.Type} {this.Name} of {this.Faction} => Health Points: {this.HealthPoints} || Speed: {this.Speed}";
         }
+
+        public virtual string GetExtraStat()
+        {
+            if (this.Type == CharacterType.Mage)
+            {
+                return "Mana";
+            }
+            else
+            {
+                return "Stamina";
+            }
+        }
+
+        public abstract int GetExtraStatValue();
 
         //public virtual string Attack1()
         //{

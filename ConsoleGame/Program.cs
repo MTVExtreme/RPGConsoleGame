@@ -19,6 +19,7 @@ namespace ConsoleGame
         {
             #region Startup Items
             Random rnd = new Random();
+           
             bool TwoPlayers;
             bool ThreePlayers;
 
@@ -26,6 +27,55 @@ namespace ConsoleGame
             CreatePlayer(out TwoPlayers, out ThreePlayers, out player1, ref player2, ref player3, gameType, rnd);
 
             #endregion
+
+            while (true)
+            {
+                Random enemyRND = new Random();
+                #region Battle Commence Notice
+                int enemies = enemyRND.Next(1, 4);
+                Dictionary<string, RandomEnemy> enemyList = new Dictionary<string, RandomEnemy>();
+                for (int i = 0; i < enemies; i++)
+                {
+                    enemyList.Add("enemy" + i, new RandomEnemy(enemyRND));
+                }
+
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("ENEMY ENCOUNTER!\n");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Hit enter to Commence the Battle >");
+                Console.Clear();
+                #endregion
+
+                #region Player Stats
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("_____________________________________________________________________________");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3} | {4}: {5}",player1.Type, player1.Name, player1.HealthPoints, player1.Speed, player1.GetExtraStat(), player1.GetExtraStatValue());
+                if (TwoPlayers == true)
+                { Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3} | {4}: {5}", player2.Type, player2.Name, player2.HealthPoints, player2.Speed, player2.GetExtraStat(), player2.GetExtraStatValue()); }
+                if (ThreePlayers == true)
+                { Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3} | {4}: {5}", player3.Type, player3.Name, player3.HealthPoints, player3.Speed, player3.GetExtraStat(), player3.GetExtraStatValue()); }
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("_____________________________________________________________________________");
+                #endregion
+
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("_____________________________________________________________________________");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
+                    foreach(var count in enemyList)
+                {
+                    Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3}", count.Value.Name, count.Value.HealthPoints, count.Value.Speed);
+                }
+                Console.WriteLine("_____________________________________________________________________________");
+                Console.ReadLine();
+
+
+            }
+
 
             Console.ReadLine();
             player1.ReadAttacks();

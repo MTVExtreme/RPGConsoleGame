@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleGame
 {
-    class RabidWolf : Enemy
+    class BossWolf : Enemy
     {
         Dictionary<string, int> Attacks = new Dictionary<string, int>
             {
@@ -15,7 +15,7 @@ namespace ConsoleGame
                 {"Whip", 10 }
             };
 
-        public RabidWolf()
+        public BossWolf()
         {
             this.HealthPoints = 30;
             this.Name = "Rabid Wolf";
