@@ -13,7 +13,7 @@ namespace ConsoleGame
         public static PlayerClass player2;
         public static PlayerClass player3;
 
-        public static string Version = "0.5.12";
+        public static string Version = "0.5.16";
         #endregion
         static void Main(string[] args)
         {
@@ -200,8 +200,7 @@ namespace ConsoleGame
                             }
                             else if (value == 2)
                             {
-                                player1.ReadSpecialAttacks();
-                               // int num = Int32.Parse(Console.ReadLine());
+                                player1.Heal();
 
                             }
                             else
@@ -211,7 +210,7 @@ namespace ConsoleGame
                     }
                     if (i == 1)
                     {
-                        player2.ReadAttacks();
+                        //player2.ReadAttacks();
                     }
                     if (i == 2)
                     {
@@ -226,21 +225,18 @@ namespace ConsoleGame
             }
 
 
-            player1.ReadAttacks();
-            player1.ReadSpecialAttacks();
-            Console.ReadLine();
 
-            if (TwoPlayers == true)
-            {
-                player2.ReadAttacks();
-                player2.ReadSpecialAttacks();
-            }
-            Console.ReadLine();
-
-            //RabidWolf Wolf = new RabidWolf();
-            //Wolf.Insult();
-            //Wolf.WolfAttack(player1);
+            //if (TwoPlayers == true)
+            //{
+            //    player2.ReadAttacks();
+            //    player2.ReadSpecialAttacks();
+            //}
             //Console.ReadLine();
+
+            ////RabidWolf Wolf = new RabidWolf();
+            ////Wolf.Insult();
+            ////Wolf.WolfAttack(player1);
+            ////Console.ReadLine();
 
 
         }
@@ -441,7 +437,7 @@ namespace ConsoleGame
 
         private static int WelcomeScreen()
         {
-            bool playerCheck;
+            
             Console.WriteLine("Welcome to DURF (Deadly Underground Reference Fighting)");
             Console.WriteLine("Version: {0} | Author: Tyler Vermillion ©2017-{1}", Version, DateTime.Now.Year);
             string durfFlash = @"
