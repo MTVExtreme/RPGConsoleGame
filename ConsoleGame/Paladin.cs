@@ -10,6 +10,12 @@ namespace ConsoleGame
     {
         public int Stamina { get; set; }
 
+        public void Attack(Enemy p)
+        {
+            Attack(p, Attackz, this.Name);
+
+        }
+
         Dictionary<string, int> specialAttacks = new Dictionary<string, int>
             {
                 {"Shield Clash", 12},

@@ -63,7 +63,7 @@ namespace ConsoleGame
                     goes = 2;
                 }
 
-                for (int i = 0; i < goes; i++)
+                for (int i = 0; i <= goes; i++)
                 {
                     string playerTurn;
 
@@ -92,6 +92,9 @@ namespace ConsoleGame
                         bool running = true;
                         while(running == true)
                         {
+                            #region Render Battle Menu
+                            int x = 0;
+                            DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("|--Menu Select the Number of the Option You Want--|");
                             Console.ForegroundColor = ConsoleColor.White;
@@ -102,37 +105,65 @@ namespace ConsoleGame
                             Console.ForegroundColor = ConsoleColor.DarkGreen;
                             Console.WriteLine("_____________________________________________________________________________");
                             Console.ForegroundColor = ConsoleColor.White;
+
+                            #endregion
+
                             int value = Int32.Parse(Console.ReadLine());
                             if (value == 0)
                             {
+                                int attacker;
+                                #region Player 1 Attacking using Generic Attacks
+
                                 player1.ReadAttacks();
                                 int num = Int32.Parse(Console.ReadLine());
-                                if (num == 0)
-                                {
+                                num = num - 1;
+                               
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
 
                                     Console.WriteLine("Pick an Enemy: ");
                                     foreach (var count in enemyList)
-                                    {
-                                        Console.WriteLine("{0}: Attack {1} {2}",count, count.Value.Name, count.Value.Type);
+                                    {                                       
+                                        Console.WriteLine("{0}: Attack {1} {2}",x, count.Value.Name, count.Value.Type);
+                                        x++;
                                     }
-                                    int attacker = Int32.Parse(Console.ReadLine());
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    attacker = Int32.Parse(Console.ReadLine());
 
+                                    if (attacker == 0)
+                                    {
+                                        var val = enemyList["enemy0"];
+                                        player1.Attack(val, num, val.Name);
+                                        Console.ReadLine();
+                                    }
 
+                                    if (attacker == 1)
+                                    {
+                                        var val = enemyList["enemy1"];
+                                        player1.Attack(val, num, val.Name);
+                                        Console.ReadLine();
+                                    }
 
+                                    if (attacker == 2)
+                                    {
+                                        var val = enemyList["enemy2"];
+                                        player1.Attack(val, num, val.Name);
+                                        Console.ReadLine();
+                                    }
 
-                                }
+                                    #endregion
+
+                                    
                             }
-                            if (value == 1)
+                            else if (value == 1)
                             {
                                 player1.ReadSpecialAttacks();
-                                int num = Int32.Parse(Console.ReadLine());
+                                //int num = Int32.Parse(Console.ReadLine());
 
                             }
-                            if (value == 2)
+                            else if (value == 2)
                             {
                                 player1.ReadSpecialAttacks();
-                                int num = Int32.Parse(Console.ReadLine());
+                               // int num = Int32.Parse(Console.ReadLine());
 
                             }
                             else
@@ -178,6 +209,7 @@ namespace ConsoleGame
 
         private static void DisplayStats(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList)
         {
+            Console.Clear();
             #region Player Stats
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Your Party's Stats");

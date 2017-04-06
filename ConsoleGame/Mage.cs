@@ -10,6 +10,12 @@ namespace ConsoleGame
     {
         public int Mana { get; set; }
 
+        public void Attack(Enemy p)
+        {
+            Attack(p, Attackz, this.Name);
+
+        }
+
         Dictionary<string, int> specialAttacks = new Dictionary<string, int>
             {
                 {"Firebolt", 15},

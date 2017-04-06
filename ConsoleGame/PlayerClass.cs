@@ -16,6 +16,7 @@ namespace ConsoleGame
         public int Speed { get; set; }
         public CharacterType Type { get; set; }
         public bool IsAI { get; set; }
+        public int Attackz { get; set; }
 
         public Dictionary<string, int> Attacks {get; set;}
         public Dictionary<string, int> SpecialAttacks { get; set; }
@@ -89,15 +90,17 @@ namespace ConsoleGame
 
         public abstract int GetExtraStatValue();
 
-        public void Attack(RandomEnemy player, Dictionary<string, int> dict, Object enemyName)
+        public void Attack(Enemy player, int attack  , Object enemyName)
         {
 
 
-            var singleAttack = attacks.ElementAt(0);
+            var singleAttack = attacks.ElementAt(attack);
             int attackVal = singleAttack.Value;
             string attackName = singleAttack.Key;
 
-            Console.WriteLine("{3} Attack {0} with {1} for {2} damage", player.Name, attackName, attackVal, this.Name);
+            Console.WriteLine("{3} Attacks {0} with {1} for {2} damage", player.Name, attackName, attackVal, this.Name);
+
+            player.HealthPoints -= attackVal;
         }
     }
 }
