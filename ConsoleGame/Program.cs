@@ -13,7 +13,7 @@ namespace ConsoleGame
         public static PlayerClass player2;
         public static PlayerClass player3;
 
-        public static string Version = "0.4.0";
+        public static string Version = "0.5.12";
         #endregion
         static void Main(string[] args)
         {
