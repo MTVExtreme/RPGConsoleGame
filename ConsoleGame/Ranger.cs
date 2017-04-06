@@ -16,6 +16,12 @@ namespace ConsoleGame
 
         }
 
+        public void SpecialAttack(Enemy p)
+        {
+            SpecialAttack(p, Attackz, specialAttacks, this.Name);
+
+        }
+
         Dictionary<string, int> specialAttacks = new Dictionary<string, int>
             {
                 {"Quick Shot", 12},

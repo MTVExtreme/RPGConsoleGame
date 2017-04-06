@@ -156,8 +156,46 @@ namespace ConsoleGame
                             }
                             else if (value == 1)
                             {
+                                #region Player 1 Attacking using Special Attacks
+
                                 player1.ReadSpecialAttacks();
-                                //int num = Int32.Parse(Console.ReadLine());
+                                int num = Int32.Parse(Console.ReadLine());
+                                num = num - 1;
+
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+                                Console.WriteLine("Pick an Enemy: ");
+                                foreach (var count in enemyList)
+                                {
+                                    Console.WriteLine("{0}: Attack {1} {2}", x, count.Value.Name, count.Value.Type);
+                                    x++;
+                                }
+                                Console.ForegroundColor = ConsoleColor.White;
+                                int attacker = Int32.Parse(Console.ReadLine());
+
+                                if (attacker == 0)
+                                {
+                                    var val = enemyList["enemy0"];
+                                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
+                                    Console.ReadLine();
+                                }
+
+                                if (attacker == 1)
+                                {
+                                    var val = enemyList["enemy1"];
+                                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
+                                    Console.ReadLine();
+                                }
+
+                                if (attacker == 2)
+                                {
+                                    var val = enemyList["enemy2"];
+                                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
+                                    Console.ReadLine();
+                                }
+
+                                #endregion
+
 
                             }
                             else if (value == 2)

@@ -31,6 +31,8 @@ namespace ConsoleGame
                 {"Kick", 10 }
             };
 
+        Dictionary<string, int> specialAttacks = new Dictionary<string, int>();
+
         public PlayerClass(string name, string faction, CharacterType type = CharacterType.Human)
         {
             this.Name = name;
@@ -101,6 +103,24 @@ namespace ConsoleGame
             Console.WriteLine("{3} Attacks {0} with {1} for {2} damage", player.Name, attackName, attackVal, this.Name);
 
             player.HealthPoints -= attackVal;
+        }
+
+        public void SpecialAttack(Enemy player, int attack, Dictionary<string, int> fire , Object enemyName)
+        {
+
+
+            var singleAttack = fire.ElementAt(attack);
+            int attackVal = singleAttack.Value;
+            string attackName = singleAttack.Key;
+
+            Console.WriteLine("{3} Attacks {0} with {1} for {2} damage", player.Name, attackName, attackVal, this.Name);
+
+            player.HealthPoints -= attackVal;
+        }
+
+        public void Heal()
+        {
+
         }
     }
 }
