@@ -13,7 +13,7 @@ namespace ConsoleGame
         public static PlayerClass player2;
         public static PlayerClass player3;
 
-        public static string Version = "0.5.16";
+        public static string Version = "0.5.17";
         #endregion
         static void Main(string[] args)
         {
@@ -51,6 +51,8 @@ namespace ConsoleGame
                 //Renders Stats
                 DisplayStats(TwoPlayers, ThreePlayers, enemyList);
 
+                #region Counting Loops
+
                 //int turn = FindMaxValue(players, x => x.Speed); //Possible Speed Feature in Future
                 int goes = 0;
                 if (TwoPlayers == true)
@@ -63,8 +65,10 @@ namespace ConsoleGame
                     goes = 2;
                 }
 
+                #endregion
                 for (int i = 0; i <= goes; i++)
                 {
+                    #region Player Turn
                     string playerTurn;
 
                     if (i == 0)
@@ -81,12 +85,18 @@ namespace ConsoleGame
                     }
                     else { playerTurn = "Player"; }
 
+                    #endregion
+
+                    #region Setup
                     Console.Clear();
                     DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine("|---|{0}'s turn to attack|---|",playerTurn);
                     Console.WriteLine("_____________________________________________________________________________");
                     Console.ForegroundColor = ConsoleColor.White;
+
+                    #endregion Setup
+
                     if (i == 0)
                     {
                         bool running = true;
@@ -216,11 +226,7 @@ namespace ConsoleGame
                     {
                         player3.ReadAttacks();
                     }
-
-
                 }
-
-
                 Console.ReadLine();
             }
 
