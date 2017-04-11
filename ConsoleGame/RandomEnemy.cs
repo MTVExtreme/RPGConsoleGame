@@ -13,6 +13,31 @@ namespace ConsoleGame
                 {"Bite", 5 },
                 {"Headbutt", 5 },
                 {"Whip", 10 }
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+                //{"Bite", 5 },
+                //{"Headbutt", 5 },
+                //{"Whip", 10 },
+
             };
 
         public List<string> MonsterName = new List<string>()
@@ -94,6 +119,7 @@ namespace ConsoleGame
             this.MaxHealthPoints = hp;
             this.Type = type;
             this.Name = name;
+            this.NPC = true;
         }
 
         public void RandomAttack(PlayerClass p)

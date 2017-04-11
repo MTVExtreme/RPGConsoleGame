@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace ConsoleGame
 {
@@ -11,7 +12,9 @@ namespace ConsoleGame
         public static PlayerClass player2;
         public static PlayerClass player3;
 
-        public static string Version = "0.6.29";
+        protected static int EnemyCount;
+
+        public static string Version = "0.6.42";
         #endregion
         static void Main(string[] args)
         {
@@ -39,8 +42,16 @@ namespace ConsoleGame
                 //Renders Stats
                 DisplayStats(TwoPlayers, ThreePlayers, enemyList);
 
-                var combatOrder = setCombatOrder(TwoPlayers, ThreePlayers, enemyList);
+                EnemyCount = enemyList.Count();
 
+                var combatOrder = setCombatOrder(TwoPlayers, ThreePlayers, enemyList);
+#if DEBUG
+                foreach (var item in combatOrder)
+                {
+                    Console.WriteLine("Name: {0} | Speed: {1} | Unit ID: {2} | NPC: {3}", item.Key.Name, item.Key.Speed, item.Key.ID, item.Key.NPC);
+                }
+                Console.ReadLine();
+#endif
                 do
                 {
                     foreach (var combatant in combatOrder)
@@ -48,69 +59,22 @@ namespace ConsoleGame
                         string playerTurn;
                         int id = combatant.Key.ID;
 
+
+
                         if (combatant.Key.NPC == true)
                         {
                             if (id > 2 && id < 6)
                             {
-                                Enemy currentEnemy = (Enemy)combatant.Key;
+                                Console.WriteLine("ENEMY TURN!");
+                                Console.ReadLine();
+                                //Enemy currentEnemy = (Enemy)combatant.Key;
                             }
-                            if (id < 3 && id > 1)
-                            {
-                                int number = rnd.Next(1, 100);
-                                int num;
-                                PlayerClass currentPlayer = (PlayerClass)combatant.Key;
-
-                                if (currentPlayer.HealthPoints >= (currentPlayer.MaxHealthPoints *.5))
-                                {
-                                   if (number >= 40)
-                                    {
-                                        num = rnd.Next(0, 2);
-                                        if (num == 0)
-                                        {
-                                            num = rnd.Next(0, 4);
-                                            currentPlayer.Attack(enemyList["enemy0"], num, enemyList["enemy0"].Name);
-                                            Console.ReadLine();
-                                        }
-                                        else if (num == 1)
-                                        {
-                                            num = rnd.Next(0, 4);
-                                            currentPlayer.Attack(enemyList["enemy1"], num, enemyList["enemy1"].Name);
-                                            Console.ReadLine();
-
-                                        }
-                                        else if (num == 2)
-                                        {
-                                            num = rnd.Next(0, 4);
-                                            currentPlayer.Attack(enemyList["enemy2"], num, enemyList["enemy2"].Name);
-                                            Console.ReadLine();
-
-                                        }
-
-
-                                    }
-                                   if (number >= 20 && number < 40)
-                                    {
-                                        Console.WriteLine("20-40");
-                                        Console.ReadLine();
-                                    }
-                                    if (number < 20)
-                                    {
-                                        currentPlayer.Heal();
-                                    }
-                                }
-                                if (currentPlayer.HealthPoints <= (currentPlayer.MaxHealthPoints * .3))
-                                {
-                                    if (number >= 60)
-                                    {
-
-                                    }
-                                }
-                                if (currentPlayer.HealthPoints <= (currentPlayer.MaxHealthPoints * .15))
-                                {
-
-                                }
-
+                            if (id < 3 && id > 0)
+                            { 
+                                NPCRandomAction(rnd, enemyList, combatant);
+                                //Thread.Sleep(1000);
                             }
+
                         }
                         else if (combatant.Key.NPC == false)
                         {
@@ -145,6 +109,113 @@ namespace ConsoleGame
 
             }
 
+        }
+
+        private static void NPCRandomAction(Random rnd, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant)
+        {
+            int number = rnd.Next(1, 100);
+            int num;
+            PlayerClass currentPlayer = (PlayerClass)combatant.Key;
+
+            if (currentPlayer.HealthPoints >= (currentPlayer.MaxHealthPoints * .5))
+            {
+                if (number >= 40)
+                {
+                    num = NPCPlayerAttacking(rnd, enemyList, currentPlayer);
+
+                }
+                if (number >= 20 && number < 40)
+                {
+                    num = NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer);
+                }
+                if (number < 20)
+                {
+                    currentPlayer.Heal();
+                }
+            }
+            if (currentPlayer.HealthPoints <= (currentPlayer.MaxHealthPoints * .3))
+            {
+                if (number >= 60)
+                {
+                    num = NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer);
+                }
+                if (number >= 30 && number < 60)
+                {
+                    num = NPCPlayerAttacking(rnd, enemyList, currentPlayer);
+
+                }
+                if (number < 30)
+                {
+                    currentPlayer.Heal();
+                }
+            }
+            if (currentPlayer.HealthPoints <= (currentPlayer.MaxHealthPoints * .15))
+            {
+                if (number >= 15)
+                {
+                    currentPlayer.Heal();
+                }
+                if (number < 15)
+                {
+                    num = NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer);
+                }
+            }
+
+        }
+
+        private static int NPCPlayerSpecialAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
+        {
+            int num = rnd.Next(0, EnemyCount);
+            if (num == 0)
+            {
+                num = rnd.Next(0, 2);
+                currentPlayer.SpecialAttack(enemyList["enemy0"], num, currentPlayer.SpecialAttacks, enemyList["enemy0"].Name);
+                Console.ReadLine();
+            }
+            else if (num == 1)
+            {
+                num = rnd.Next(0, 2);
+                currentPlayer.SpecialAttack(enemyList["enemy1"], num, currentPlayer.SpecialAttacks, enemyList["enemy1"].Name);
+                Console.ReadLine();
+
+            }
+            else if (num == 2)
+            {
+                num = rnd.Next(0, 2);
+                currentPlayer.SpecialAttack(enemyList["enemy2"], num, currentPlayer.SpecialAttacks, enemyList["enemy2"].Name);
+                Console.ReadLine();
+
+            }
+
+            return num;
+        }
+
+        private static int NPCPlayerAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
+        {
+            int num = rnd.Next(0, EnemyCount);
+
+            if (num == 0)
+            {
+                num = rnd.Next(0, 4);
+                currentPlayer.Attack(enemyList["enemy0"], num, enemyList["enemy0"].Name);
+                Console.ReadLine();
+            }
+            else if (num == 1)
+            {
+                num = rnd.Next(0, 4);
+                currentPlayer.Attack(enemyList["enemy1"], num, enemyList["enemy1"].Name);
+                Console.ReadLine();
+
+            }
+            else if (num == 2)
+            {
+                num = rnd.Next(0, 4);
+                currentPlayer.Attack(enemyList["enemy2"], num, enemyList["enemy2"].Name);
+                Console.ReadLine();
+
+            }
+
+            return num;
         }
 
         private static Dictionary<string, RandomEnemy> BattleCommenceNotice(Random enemyRND)
