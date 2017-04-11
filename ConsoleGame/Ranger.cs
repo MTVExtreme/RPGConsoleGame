@@ -36,6 +36,7 @@ namespace ConsoleGame
             //this.Level = 1;
             this.Ammo = 12;
             this.HealthPoints = 100;
+            this.MaxHealthPoints = HealthPoints;
             this.Speed = 13;
             this.Type = CharacterType.Ranger;
             this.SpecialAttacks = specialAttacks;

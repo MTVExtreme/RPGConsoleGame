@@ -36,6 +36,7 @@ namespace ConsoleGame
             //this.Level = 1;
             this.Stamina = 40;
             this.HealthPoints = 160;
+            this.MaxHealthPoints = HealthPoints;
             this.Speed = 9;
             this.Type = CharacterType.Paladin;
             this.SpecialAttacks = specialAttacks;

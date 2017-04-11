@@ -33,6 +33,7 @@ namespace ConsoleGame
         {
             this.Stamina = 25;
             this.HealthPoints = 85;
+            this.MaxHealthPoints = HealthPoints;
             this.Speed = 16;
             this.Type = CharacterType.Ninja;
             this.SpecialAttacks = specialAttacks;

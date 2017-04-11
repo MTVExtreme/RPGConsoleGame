@@ -91,6 +91,7 @@ namespace ConsoleGame
 
             this.Speed = speed;
             this.HealthPoints = hp;
+            this.MaxHealthPoints = hp;
             this.Type = type;
             this.Name = name;
         }

@@ -33,6 +33,7 @@ namespace ConsoleGame
             this.Level = 1;
             this.Attacks = attacks;
             this.NPC = npc;
+
             
         }
 

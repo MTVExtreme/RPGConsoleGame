@@ -11,7 +11,7 @@ namespace ConsoleGame
         public static PlayerClass player2;
         public static PlayerClass player3;
 
-        public static string Version = "0.6.08";
+        public static string Version = "0.6.23";
         #endregion
         static void Main(string[] args)
         {
@@ -52,10 +52,63 @@ namespace ConsoleGame
                         {
                             if (id > 2 && id < 6)
                             {
-
+                                Enemy currentEnemy = (Enemy)combatant.Key;
                             }
                             if (id < 3 && id > 1)
                             {
+                                int number = rnd.Next(1, 100);
+                                int num;
+                                PlayerClass currentPlayer = (PlayerClass)combatant.Key;
+
+                                if (currentPlayer.HealthPoints >= (currentPlayer.MaxHealthPoints *.5))
+                                {
+                                   if (number >= 40)
+                                    {
+                                        num = rnd.Next(0, 2);
+                                        if (num == 0)
+                                        {
+                                            num = rnd.Next(0, 4);
+                                            currentPlayer.Attack(enemyList["enemy0"], num, enemyList["enemy0"].Name);
+                                            Console.ReadLine();
+                                        }
+                                        else if (num == 1)
+                                        {
+                                            num = rnd.Next(0, 4);
+                                            currentPlayer.Attack(enemyList["enemy1"], num, enemyList["enemy1"].Name);
+                                            Console.ReadLine();
+
+                                        }
+                                        else if (num == 2)
+                                        {
+                                            num = rnd.Next(0, 4);
+                                            currentPlayer.Attack(enemyList["enemy2"], num, enemyList["enemy2"].Name);
+                                            Console.ReadLine();
+
+                                        }
+
+
+                                    }
+                                   if (number >= 20 && number < 40)
+                                    {
+                                        Console.WriteLine("20-40");
+                                        Console.ReadLine();
+                                    }
+                                    if (number < 20)
+                                    {
+                                        currentPlayer.Heal();
+                                    }
+                                }
+                                if (currentPlayer.HealthPoints <= (currentPlayer.MaxHealthPoints * .3))
+                                {
+                                    if (number >= 60)
+                                    {
+
+                                    }
+                                }
+                                if (currentPlayer.HealthPoints <= (currentPlayer.MaxHealthPoints * .15))
+                                {
+
+                                }
 
                             }
                         }
@@ -130,10 +183,6 @@ namespace ConsoleGame
             bool running = true;
             while (running == true)
             {
-                
-
-
-
                 #region Render Battle Menu
                 int x = 0;
                 DisplayStats(TwoPlayers, ThreePlayers, enemyList);
@@ -154,8 +203,6 @@ namespace ConsoleGame
                 int value = Int32.Parse(Console.ReadLine());
                 if (value == 0)
                 {
-
-
                     int attacker;
                     #region Player Attacking using Generic Attacks
 
@@ -174,29 +221,7 @@ namespace ConsoleGame
                     Console.ForegroundColor = ConsoleColor.White;
                     attacker = Int32.Parse(Console.ReadLine());
 
-                    if (attacker == 0)
-                    {
-                        var val = enemyList["enemy0"];
-                        currentPlayer.Attack(val, num, val.Name);
-                        Console.ReadLine();
-                        running = false;
-                    }
-
-                    if (attacker == 1)
-                    {
-                        var val = enemyList["enemy1"];
-                        currentPlayer.Attack(val, num, val.Name);
-                        Console.ReadLine();
-                        running = false;
-                    }
-
-                    if (attacker == 2)
-                    {
-                        var val = enemyList["enemy2"];
-                        currentPlayer.Attack(val, num, val.Name);
-                        Console.ReadLine();
-                        running = false;
-                    }
+                    running = Attacking(enemyList, currentPlayer, running, attacker, num);
 
                     #endregion
 
@@ -221,29 +246,7 @@ namespace ConsoleGame
                     Console.ForegroundColor = ConsoleColor.White;
                     int attacker = Int32.Parse(Console.ReadLine());
 
-                    if (attacker == 0)
-                    {
-                        var val = enemyList["enemy0"];
-                        currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
-                        Console.ReadLine();
-                        running = false;
-                    }
-
-                    if (attacker == 1)
-                    {
-                        var val = enemyList["enemy1"];
-                        currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
-                        Console.ReadLine();
-                        running = false;
-                    }
-
-                    if (attacker == 2)
-                    {
-                        var val = enemyList["enemy2"];
-                        currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
-                        Console.ReadLine();
-                        running = false;
-                    }
+                    running = SpecialAttacking(enemyList, currentPlayer, running, num, attacker);
 
                     #endregion
 
@@ -258,6 +261,64 @@ namespace ConsoleGame
                 
                     
             }
+        }
+
+        private static bool SpecialAttacking(Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool running, int num, int attacker)
+        {
+            if (attacker == 0)
+            {
+                var val = enemyList["enemy0"];
+                currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
+                Console.ReadLine();
+                running = false;
+            }
+
+            if (attacker == 1)
+            {
+                var val = enemyList["enemy1"];
+                currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
+                Console.ReadLine();
+                running = false;
+            }
+
+            if (attacker == 2)
+            {
+                var val = enemyList["enemy2"];
+                currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
+                Console.ReadLine();
+                running = false;
+            }
+
+            return running;
+        }
+
+        private static bool Attacking(Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool running, int attacker, int num)
+        {
+            if (attacker == 0)
+            {
+                var val = enemyList["enemy0"];
+                currentPlayer.Attack(val, num, val.Name);
+                Console.ReadLine();
+                running = false;
+            }
+
+            if (attacker == 1)
+            {
+                var val = enemyList["enemy1"];
+                currentPlayer.Attack(val, num, val.Name);
+                Console.ReadLine();
+                running = false;
+            }
+
+            if (attacker == 2)
+            {
+                var val = enemyList["enemy2"];
+                currentPlayer.Attack(val, num, val.Name);
+                Console.ReadLine();
+                running = false;
+            }
+
+            return running;
         }
 
         private static void DisplayCombatName(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList, string playerTurn)
@@ -306,11 +367,11 @@ namespace ConsoleGame
             Console.WriteLine("_____________________________________________________________________________");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3} | {4}: {5}", player1.Type, player1.Name, player1.HealthPoints, player1.Speed, player1.GetExtraStat(), player1.GetExtraStatValue());
+            Console.WriteLine(" {0} {1}'s HP: {2}/{6} | Speed: {3} | {4}: {5}", player1.Type, player1.Name, player1.HealthPoints, player1.Speed, player1.GetExtraStat(), player1.GetExtraStatValue(),player1.MaxHealthPoints);
             if (TwoPlayers == true)
-            { Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3} | {4}: {5}", player2.Type, player2.Name, player2.HealthPoints, player2.Speed, player2.GetExtraStat(), player2.GetExtraStatValue()); }
+            { Console.WriteLine(" {0} {1}'s HP: {2}/{6} | Speed: {3} | {4}: {5}", player2.Type, player2.Name, player2.HealthPoints, player2.Speed, player2.GetExtraStat(), player2.GetExtraStatValue(), player2.MaxHealthPoints); }
             if (ThreePlayers == true)
-            { Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3} | {4}: {5}", player3.Type, player3.Name, player3.HealthPoints, player3.Speed, player3.GetExtraStat(), player3.GetExtraStatValue()); }
+            { Console.WriteLine(" {0} {1}'s HP: {2}/{6} | Speed: {3} | {4}: {5}", player3.Type, player3.Name, player3.HealthPoints, player3.Speed, player3.GetExtraStat(), player3.GetExtraStatValue(), player3.MaxHealthPoints); }
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("_____________________________________________________________________________");
             #endregion
@@ -323,7 +384,7 @@ namespace ConsoleGame
             Console.ForegroundColor = ConsoleColor.White;
             foreach (var count in enemyList)
             {
-                Console.WriteLine(" {0} {1}'s HP: {2} | Speed: {3}", count.Value.Name, count.Value.Type, count.Value.HealthPoints, count.Value.Speed);
+                Console.WriteLine(" {0} {1}'s HP: {2}/{4} | Speed: {3}", count.Value.Name, count.Value.Type, count.Value.HealthPoints, count.Value.Speed, count.Value.MaxHealthPoints);
             }
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("_____________________________________________________________________________");

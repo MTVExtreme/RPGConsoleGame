@@ -33,6 +33,7 @@ namespace ConsoleGame
         {
             this.Mana = 30;
             this.HealthPoints = 80;
+            this.MaxHealthPoints = HealthPoints;
             this.Speed = 6;
             this.Type = CharacterType.Mage;
             this.SpecialAttacks = specialAttacks;

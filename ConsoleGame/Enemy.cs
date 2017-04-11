@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleGame
@@ -57,6 +58,16 @@ namespace ConsoleGame
             string attackName = singleAttack.Key;
 
             Console.WriteLine("Enemy Attacks {0} with {1} for {2} damage",player.Name, attackName, attackVal);
+        }
+
+        public void Heal()
+        {
+            Random rnd = new Random();
+            int hp = rnd.Next(5, 70);
+            this.HealthPoints += hp;
+
+            Console.WriteLine("{0} healed {1} HP.", this.Name, hp);
+            Thread.Sleep(4000);
         }
     }
 }
