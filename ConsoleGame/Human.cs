@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ConsoleGame
 {
@@ -29,7 +25,7 @@ namespace ConsoleGame
                 {"Heavy Swing", 24},
             };
 
-        public Human(string name, string faction) : base(name, faction)
+        public Human(string name, string faction, bool npc) : base(name, faction, npc)
         {
             this.Stamina = 25;
             this.HealthPoints = 85;

@@ -29,7 +29,7 @@ namespace ConsoleGame
                 {"Hero's Slash", 30},
             };
 
-        public Paladin(string name, string faction) : base(name, faction)
+        public Paladin(string name, string faction, bool npc) : base(name, faction, npc)
         {
             //this.Name = name;
             //this.Faction = faction;

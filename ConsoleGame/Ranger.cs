@@ -29,7 +29,7 @@ namespace ConsoleGame
                 {"Arrow Storm", 36},
             };
 
-        public Ranger(string name, string faction) : base(name, faction)
+        public Ranger(string name, string faction, bool npc) : base(name, faction, npc)
         {
             //this.Name = name;
             //this.Faction = faction;

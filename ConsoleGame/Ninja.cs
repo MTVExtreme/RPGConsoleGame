@@ -29,7 +29,7 @@ namespace ConsoleGame
                 {"Death from Above", 75},
             };
 
-        public Ninja(string name, string faction) : base(name, faction)
+        public Ninja(string name, string faction, bool npc) : base(name, faction, npc)
         {
             this.Stamina = 25;
             this.HealthPoints = 85;

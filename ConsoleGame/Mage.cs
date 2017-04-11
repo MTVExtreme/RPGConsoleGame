@@ -29,7 +29,7 @@ namespace ConsoleGame
                 {"Thunderstorm", 50},
             };
 
-        public Mage(string name, string faction) : base(name, faction)
+        public Mage(string name, string faction, bool npc) : base(name, faction, npc)
         {
             this.Mana = 30;
             this.HealthPoints = 80;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGame
 {
@@ -28,12 +26,14 @@ namespace ConsoleGame
 
         Dictionary<string, int> specialAttacks = new Dictionary<string, int>();
 
-        public PlayerClass(string name, string faction, CharacterType type = CharacterType.Human)
+        public PlayerClass(string name, string faction, bool npc, CharacterType type = CharacterType.Human)
         {
             this.Name = name;
             this.Faction = faction;
             this.Level = 1;
             this.Attacks = attacks;
+            this.NPC = npc;
+            
         }
 
         public virtual void ReadAttacks()

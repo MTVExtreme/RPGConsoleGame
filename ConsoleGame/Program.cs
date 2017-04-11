@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGame
 {
@@ -25,6 +23,9 @@ namespace ConsoleGame
 
             int gameType = WelcomeScreen();
             CreatePlayer(out TwoPlayers, out ThreePlayers, out player1, ref player2, ref player3, gameType, rnd);
+            player1.ID = 0;
+            player2.ID = 1;
+            player3.ID = 2;
 
             #endregion
 
@@ -37,8 +38,12 @@ namespace ConsoleGame
                 Dictionary<string, RandomEnemy> enemyList = new Dictionary<string, RandomEnemy>();
                 for (int i = 0; i < enemies; i++)
                 {
-                    enemyList.Add("enemy" + i, new RandomEnemy(enemyRND));
+                    enemyList.Add("enemy" + i, new RandomEnemy(enemyRND));                  
                 }
+
+                enemyList.ElementAt(0).Value.ID = 3;
+                enemyList.ElementAt(1).Value.ID = 4;
+                enemyList.ElementAt(2).Value.ID = 5;
 
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -51,182 +56,206 @@ namespace ConsoleGame
                 //Renders Stats
                 DisplayStats(TwoPlayers, ThreePlayers, enemyList);
 
+                var combatOrder = setCombatOrder(TwoPlayers, ThreePlayers, enemyList);
+                foreach (var item in combatOrder)
+                {
+                    Console.WriteLine(item.Key.Name);
+                }
+                Console.ReadLine();
+
                 #region Counting Loops
 
-                //int turn = FindMaxValue(players, x => x.Speed); //Possible Speed Feature in Future
-                int goes = 0;
-                if (TwoPlayers == true)
-                {
-                    goes = 1;
-                }
 
-                if (ThreePlayers == true)
-                {
-                    goes = 2;
-                }
 
-                #endregion
-                for (int i = 0; i <= goes; i++)
+                foreach(var combatant in combatOrder)
                 {
-                    #region Player Turn
                     string playerTurn;
 
-                    if (i == 0)
+                    if (combatant.Key.NPC == true)
                     {
-                        playerTurn = player1.Type + " " + player1.Name;
+                        
                     }
-                    if (i == 1)
+                    else if (combatant.Key.NPC == false)
                     {
-                        playerTurn = player2.Type + " " + player2.Name;
+                        
+                        #region Setup
+                        Console.Clear();
+                        DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("|---|{0}'s turn to attack|---|", playerTurn);
+                        Console.WriteLine("_____________________________________________________________________________");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        #endregion Setup
                     }
-                    if (i == 2)
-                    {
-                        playerTurn = player3.Type + " " + player3.Name;
-                    }
-                    else { playerTurn = "Player"; }
+                    else
+                        throw new FormatException();
 
-                    #endregion
+                }
 
-                    #region Setup
-                    Console.Clear();
-                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine("|---|{0}'s turn to attack|---|",playerTurn);
-                    Console.WriteLine("_____________________________________________________________________________");
-                    Console.ForegroundColor = ConsoleColor.White;
 
-                    #endregion Setup
+                #endregion                //for (int i = 0; i <= goes; i++)
+                //{
+                //    #region Player Turn
+                //    
 
-                    if (i == 0)
-                    {
-                        bool running = true;
-                        while(running == true)
-                        {
-                            #region Render Battle Menu
-                            int x = 0;
-                            DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("|--Menu Select the Number of the Option You Want--|");
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.WriteLine("0: Attacks");
-                            Console.WriteLine("1: Special Attacks");
-                            Console.WriteLine("2: Heal");
-                            Console.WriteLine("3: Skip To Boss");
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("_____________________________________________________________________________");
-                            Console.ForegroundColor = ConsoleColor.White;
+                //    if (i == 0)
+                //    {
+                //        playerTurn = player1.Type + " " + player1.Name;
+                //    }
+                //    if (i == 1)
+                //    {
+                //        playerTurn = player2.Type + " " + player2.Name;
+                //    }
+                //    if (i == 2)
+                //    {
+                //        playerTurn = player3.Type + " " + player3.Name;
+                //    }
+                //    else { playerTurn = "Player"; }
 
-                            #endregion
+                //    #endregion
 
-                            int value = Int32.Parse(Console.ReadLine());
-                            if (value == 0)
-                            {
-                                int attacker;
-                                #region Player 1 Attacking using Generic Attacks
+                //    #region Setup
+                //    Console.Clear();
+                //    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                //    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                //    Console.WriteLine("|---|{0}'s turn to attack|---|",playerTurn);
+                //    Console.WriteLine("_____________________________________________________________________________");
+                //    Console.ForegroundColor = ConsoleColor.White;
 
-                                player1.ReadAttacks();
-                                int num = Int32.Parse(Console.ReadLine());
-                                num = num - 1;
+                //    #endregion Setup
+
+                //    if (i == 0)
+                //    {
+                //        bool running = true;
+                //        while(running == true)
+                //        {
+                //            #region Render Battle Menu
+                //            int x = 0;
+                //            DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                //            Console.ForegroundColor = ConsoleColor.Green;
+                //            Console.WriteLine("|--Menu Select the Number of the Option You Want--|");
+                //            Console.ForegroundColor = ConsoleColor.White;
+                //            Console.WriteLine("0: Attacks");
+                //            Console.WriteLine("1: Special Attacks");
+                //            Console.WriteLine("2: Heal");
+                //            Console.WriteLine("3: Skip To Boss");
+                //            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                //            Console.WriteLine("_____________________________________________________________________________");
+                //            Console.ForegroundColor = ConsoleColor.White;
+
+                //            #endregion
+
+                //            int value = Int32.Parse(Console.ReadLine());
+                //            if (value == 0)
+                //            {
+                //                int attacker;
+                //                #region Player 1 Attacking using Generic Attacks
+
+                //                player1.ReadAttacks();
+                //                int num = Int32.Parse(Console.ReadLine());
+                //                num = num - 1;
                                
-                                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //                    Console.ForegroundColor = ConsoleColor.DarkYellow;
 
-                                    Console.WriteLine("Pick an Enemy: ");
-                                    foreach (var count in enemyList)
-                                    {                                       
-                                        Console.WriteLine("{0}: Attack {1} {2}",x, count.Value.Name, count.Value.Type);
-                                        x++;
-                                    }
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    attacker = Int32.Parse(Console.ReadLine());
+                //                    Console.WriteLine("Pick an Enemy: ");
+                //                    foreach (var count in enemyList)
+                //                    {                                       
+                //                        Console.WriteLine("{0}: Attack {1} {2}",x, count.Value.Name, count.Value.Type);
+                //                        x++;
+                //                    }
+                //                    Console.ForegroundColor = ConsoleColor.White;
+                //                    attacker = Int32.Parse(Console.ReadLine());
 
-                                    if (attacker == 0)
-                                    {
-                                        var val = enemyList["enemy0"];
-                                        player1.Attack(val, num, val.Name);
-                                        Console.ReadLine();
-                                    }
+                //                    if (attacker == 0)
+                //                    {
+                //                        var val = enemyList["enemy0"];
+                //                        player1.Attack(val, num, val.Name);
+                //                        Console.ReadLine();
+                //                    }
 
-                                    if (attacker == 1)
-                                    {
-                                        var val = enemyList["enemy1"];
-                                        player1.Attack(val, num, val.Name);
-                                        Console.ReadLine();
-                                    }
+                //                    if (attacker == 1)
+                //                    {
+                //                        var val = enemyList["enemy1"];
+                //                        player1.Attack(val, num, val.Name);
+                //                        Console.ReadLine();
+                //                    }
 
-                                    if (attacker == 2)
-                                    {
-                                        var val = enemyList["enemy2"];
-                                        player1.Attack(val, num, val.Name);
-                                        Console.ReadLine();
-                                    }
+                //                    if (attacker == 2)
+                //                    {
+                //                        var val = enemyList["enemy2"];
+                //                        player1.Attack(val, num, val.Name);
+                //                        Console.ReadLine();
+                //                    }
 
-                                    #endregion
+                //                    #endregion
 
                                     
-                            }
-                            else if (value == 1)
-                            {
-                                #region Player 1 Attacking using Special Attacks
+                //            }
+                //            else if (value == 1)
+                //            {
+                //                #region Player 1 Attacking using Special Attacks
 
-                                player1.ReadSpecialAttacks();
-                                int num = Int32.Parse(Console.ReadLine());
-                                num = num - 1;
+                //                player1.ReadSpecialAttacks();
+                //                int num = Int32.Parse(Console.ReadLine());
+                //                num = num - 1;
 
-                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //                Console.ForegroundColor = ConsoleColor.DarkYellow;
 
-                                Console.WriteLine("Pick an Enemy: ");
-                                foreach (var count in enemyList)
-                                {
-                                    Console.WriteLine("{0}: Attack {1} {2}", x, count.Value.Name, count.Value.Type);
-                                    x++;
-                                }
-                                Console.ForegroundColor = ConsoleColor.White;
-                                int attacker = Int32.Parse(Console.ReadLine());
+                //                Console.WriteLine("Pick an Enemy: ");
+                //                foreach (var count in enemyList)
+                //                {
+                //                    Console.WriteLine("{0}: Attack {1} {2}", x, count.Value.Name, count.Value.Type);
+                //                    x++;
+                //                }
+                //                Console.ForegroundColor = ConsoleColor.White;
+                //                int attacker = Int32.Parse(Console.ReadLine());
 
-                                if (attacker == 0)
-                                {
-                                    var val = enemyList["enemy0"];
-                                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
-                                    Console.ReadLine();
-                                }
+                //                if (attacker == 0)
+                //                {
+                //                    var val = enemyList["enemy0"];
+                //                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
+                //                    Console.ReadLine();
+                //                }
 
-                                if (attacker == 1)
-                                {
-                                    var val = enemyList["enemy1"];
-                                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
-                                    Console.ReadLine();
-                                }
+                //                if (attacker == 1)
+                //                {
+                //                    var val = enemyList["enemy1"];
+                //                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
+                //                    Console.ReadLine();
+                //                }
 
-                                if (attacker == 2)
-                                {
-                                    var val = enemyList["enemy2"];
-                                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
-                                    Console.ReadLine();
-                                }
+                //                if (attacker == 2)
+                //                {
+                //                    var val = enemyList["enemy2"];
+                //                    player1.SpecialAttack(val, num, player1.SpecialAttacks, val.Name);
+                //                    Console.ReadLine();
+                //                }
 
-                                #endregion
+                //                #endregion
 
 
-                            }
-                            else if (value == 2)
-                            {
-                                player1.Heal();
+                //            }
+                //            else if (value == 2)
+                //            {
+                //                player1.Heal();
 
-                            }
-                            else
-                                break;
-                        }
+                //            }
+                //            else
+                //                break;
+                //        }
 
-                    }
-                    if (i == 1)
-                    {
-                        //player2.ReadAttacks();
-                    }
-                    if (i == 2)
-                    {
-                        player3.ReadAttacks();
-                    }
-                }
+                //    }
+                //    if (i == 1)
+                //    {
+                //        //player2.ReadAttacks();
+                //    }
+                //    if (i == 2)
+                //    {
+                //        player3.ReadAttacks();
+                //    }
+                //}
+
                 Console.ReadLine();
             }
 
@@ -247,27 +276,27 @@ namespace ConsoleGame
 
         }
 
-        public static List<KeyValuePair<int, Character>> setCombatOrder(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList)
+        public static List<KeyValuePair<Character, int>> setCombatOrder(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList)
         {
-            Dictionary<int, Character> order = new Dictionary<int, Character>();
+            Dictionary<Character, int> order = new Dictionary<Character, int>();
             
 
-            order.Add(player1.Speed, player1);
+            order.Add(player1, player1.Speed);
             if (TwoPlayers == true)
-                order.Add(player2.Speed, player2);
+                order.Add(player2, player2.Speed);
             if (ThreePlayers == true)
-                order.Add(player3.Speed, player3);
+                order.Add(player3, player3.Speed);
 
             foreach (var enemy in enemyList)
             {
-                order.Add(enemy.Value.Speed, enemy.Value);
+                order.Add(enemy.Value, enemy.Value.Speed);
             }
 
-            List<KeyValuePair<int, Character>> combatOrder = order.ToList();
+            List<KeyValuePair<Character, int>> combatOrder = order.ToList();
 
             //var combatOrder = order.ToList();
 
-            combatOrder.Sort((pair1, pair2) => pair1.Key.CompareTo(pair2.Key));
+            combatOrder.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
 
             return combatOrder;
 
@@ -362,6 +391,7 @@ namespace ConsoleGame
             int playerType;
             string name;
             string faction;
+            bool npc;
 
 
 
@@ -410,11 +440,12 @@ namespace ConsoleGame
             if (isAi == true)
             {
 
-                int index = rnd.Next(aiNameList.Count);
-                int Findex = rnd.Next(aiFactionList.Count);
+                int aiName = rnd.Next(aiNameList.Count);
+                int aiFaction = rnd.Next(aiFactionList.Count);
 
-                faction = aiFactionList.ElementAt(Findex);
-                name = aiNameList.ElementAt(index);
+                faction = aiFactionList.ElementAt(aiFaction); //random AI Name
+                name = aiNameList.ElementAt(aiName); //random AI Faction
+                npc = true;
 
 
                 playerType = rnd.Next(4);
@@ -432,6 +463,7 @@ namespace ConsoleGame
                     "2: Paladin\n" +
                     "3: Ranger");
                 playerType = int.Parse(Console.ReadLine());
+                npc = false;
             }
 
             #endregion
@@ -439,23 +471,23 @@ namespace ConsoleGame
             #region Player Class Assignment
             if (playerType == 0)
             {
-                player1 = new Ninja(name, faction);
+                player1 = new Ninja(name, faction, npc);
             }
             else if (playerType == 1)
             {
-                player1 = new Mage(name, faction);
+                player1 = new Mage(name, faction, npc);
             }
             else if (playerType == 2)
             {
-                player1 = new Paladin(name, faction);
+                player1 = new Paladin(name, faction, npc);
             }
             else if (playerType == 3)
             {
-                player1 = new Ranger(name, faction);
+                player1 = new Ranger(name, faction, npc);
             }
             else
             {
-                player1 = new Human(name, faction);
+                player1 = new Human(name, faction, npc);
             }
             #endregion
             //PlayerClass player = new PlayerClass(name, faction);
@@ -509,22 +541,5 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
         }
 
-        //public static int FindMaxValue<T>(List<T> list, Converter<T, int> projection) Possible Speed Feature in Future
-        //{
-        //    if (list.Count == 0)
-        //    {
-        //        throw new InvalidOperationException("Empty list");
-        //    }
-        //    int maxValue = int.MinValue;
-        //    foreach (T item in list)
-        //    {
-        //        int value = projection(item);
-        //        if (value > maxValue)
-        //        {
-        //            maxValue = value;
-        //        }
-        //    }
-        //    return maxValue;
-        //}
     }
 }
