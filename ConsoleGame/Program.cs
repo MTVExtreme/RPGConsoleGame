@@ -247,6 +247,33 @@ namespace ConsoleGame
 
         }
 
+        public static List<KeyValuePair<int, Character>> setCombatOrder(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList)
+        {
+            Dictionary<int, Character> order = new Dictionary<int, Character>();
+            
+
+            order.Add(player1.Speed, player1);
+            if (TwoPlayers == true)
+                order.Add(player2.Speed, player2);
+            if (ThreePlayers == true)
+                order.Add(player3.Speed, player3);
+
+            foreach (var enemy in enemyList)
+            {
+                order.Add(enemy.Value.Speed, enemy.Value);
+            }
+
+            List<KeyValuePair<int, Character>> combatOrder = order.ToList();
+
+            //var combatOrder = order.ToList();
+
+            combatOrder.Sort((pair1, pair2) => pair1.Key.CompareTo(pair2.Key));
+
+            return combatOrder;
+
+
+        }
+
         private static void DisplayStats(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList)
         {
             Console.Clear();
