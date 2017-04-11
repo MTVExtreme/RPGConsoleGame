@@ -9,5 +9,6 @@
         public int HealthPoints { get; set; }
         public int Speed { get; set; }
         public bool NPC { get; set; }
+
     }
 }
