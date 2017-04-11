@@ -33,87 +33,95 @@ namespace ConsoleGame
             {
                 Random enemyRND = new Random();
 
-                #region Battle Commence Notice
-                int enemies = enemyRND.Next(1, 4);
-                Dictionary<string, RandomEnemy> enemyList = new Dictionary<string, RandomEnemy>();
-                for (int i = 0; i < enemies; i++)
-                {
-                    enemyList.Add("enemy" + i, new RandomEnemy(enemyRND));                  
-                }
+                bool battle = true;
 
-                enemyList.ElementAt(0).Value.ID = 3;
-                if(enemies > 1)
-                { 
-                enemyList.ElementAt(1).Value.ID = 4;
-                }
-                if (enemies > 2)
-                {
-                    enemyList.ElementAt(2).Value.ID = 5;
-                }
-
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("ENEMY ENCOUNTER!\n");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Hit enter to Commence the Battle >");
-                Console.Clear();
-                #endregion
-
+                Dictionary<string, RandomEnemy> enemyList = BattleCommenceNotice(enemyRND);
                 //Renders Stats
                 DisplayStats(TwoPlayers, ThreePlayers, enemyList);
 
                 var combatOrder = setCombatOrder(TwoPlayers, ThreePlayers, enemyList);
-                foreach (var item in combatOrder)
+
+                do
                 {
-                    Console.WriteLine(item.Key.Name);
-                }
-                Console.ReadLine();
-
-
-
-
-                foreach(var combatant in combatOrder)
-                {
-                    string playerTurn;
-                    int id = combatant.Key.ID;
-
-                    if (combatant.Key.NPC == true)
+                    foreach (var combatant in combatOrder)
                     {
-                        Console.WriteLine("Enemy Turn!");
-                        Console.ReadLine();
-                    }
-                    else if (combatant.Key.NPC == false)
-                    {
+                        string playerTurn;
+                        int id = combatant.Key.ID;
 
-                        playerTurn = combatant.Key.Name;
-
-
-
-                        if (id == 0)
+                        if (combatant.Key.NPC == true)
                         {
-                            RunPlayerCombat(TwoPlayers, ThreePlayers, enemyList, combatant, playerTurn);
+                            if (id > 2 && id < 6)
+                            {
 
+                            }
+                            if (id < 3 && id > 1)
+                            {
+
+                            }
                         }
-                        if (id == 1)
+                        else if (combatant.Key.NPC == false)
                         {
-                            RunPlayerCombat(TwoPlayers, ThreePlayers, enemyList, combatant, playerTurn);
+
+                            playerTurn = combatant.Key.Name;
+
+
+
+                            if (id == 0)
+                            {
+                                RunPlayerCombat(TwoPlayers, ThreePlayers, enemyList, combatant, playerTurn);
+
+                            }
+                            if (id == 1)
+                            {
+                                RunPlayerCombat(TwoPlayers, ThreePlayers, enemyList, combatant, playerTurn);
+                            }
+                            if (id == 2)
+                            {
+                                RunPlayerCombat(TwoPlayers, ThreePlayers, enemyList, combatant, playerTurn);
+                            }
                         }
-                        if (id == 2)
+                        else
                         {
-                            RunPlayerCombat(TwoPlayers, ThreePlayers, enemyList, combatant, playerTurn);
+                            throw new FormatException();
                         }
-                    }
-                    else
-                    {
-                        throw new FormatException();
-                    }
 
 
-                }
-                    
+                    }
+                } while (battle == true);
+
 
             }
 
+        }
+
+        private static Dictionary<string, RandomEnemy> BattleCommenceNotice(Random enemyRND)
+        {
+            #region Battle Commence Notice
+            int enemies = enemyRND.Next(1, 4);
+            Dictionary<string, RandomEnemy> enemyList = new Dictionary<string, RandomEnemy>();
+            for (int i = 0; i < enemies; i++)
+            {
+                enemyList.Add("enemy" + i, new RandomEnemy(enemyRND));
+            }
+
+            enemyList.ElementAt(0).Value.ID = 3;
+            if (enemies > 1)
+            {
+                enemyList.ElementAt(1).Value.ID = 4;
+            }
+            if (enemies > 2)
+            {
+                enemyList.ElementAt(2).Value.ID = 5;
+            }
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("ENEMY ENCOUNTER!\n");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Hit enter to Commence the Battle >");
+            Console.Clear();
+            #endregion
+            return enemyList;
         }
 
         private static void RunPlayerCombat(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant, string playerTurn)
@@ -171,7 +179,7 @@ namespace ConsoleGame
                         var val = enemyList["enemy0"];
                         currentPlayer.Attack(val, num, val.Name);
                         Console.ReadLine();
-                        break;
+                        running = false;
                     }
 
                     if (attacker == 1)
@@ -179,7 +187,7 @@ namespace ConsoleGame
                         var val = enemyList["enemy1"];
                         currentPlayer.Attack(val, num, val.Name);
                         Console.ReadLine();
-                        break;
+                        running = false;
                     }
 
                     if (attacker == 2)
@@ -187,7 +195,7 @@ namespace ConsoleGame
                         var val = enemyList["enemy2"];
                         currentPlayer.Attack(val, num, val.Name);
                         Console.ReadLine();
-                        break;
+                        running = false;
                     }
 
                     #endregion
@@ -218,7 +226,7 @@ namespace ConsoleGame
                         var val = enemyList["enemy0"];
                         currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
                         Console.ReadLine();
-                        break;
+                        running = false;
                     }
 
                     if (attacker == 1)
@@ -226,7 +234,7 @@ namespace ConsoleGame
                         var val = enemyList["enemy1"];
                         currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
                         Console.ReadLine();
-                        break;
+                        running = false;
                     }
 
                     if (attacker == 2)
@@ -234,7 +242,7 @@ namespace ConsoleGame
                         var val = enemyList["enemy2"];
                         currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
                         Console.ReadLine();
-                        break;
+                        running = false;
                     }
 
                     #endregion
@@ -244,11 +252,11 @@ namespace ConsoleGame
                 else if (value == 2)
                 {
                     currentPlayer.Heal();
-                    break;
+                    running = false;
 
                 }
-                else
-                    break;
+                
+                    
             }
         }
 
