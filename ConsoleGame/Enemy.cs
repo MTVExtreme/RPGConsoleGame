@@ -57,7 +57,9 @@ namespace ConsoleGame
             int attackVal = singleAttack.Value;
             string attackName = singleAttack.Key;
 
-            Console.WriteLine("Enemy Attacks {0} with {1} for {2} damage",player.Name, attackName, attackVal);
+            player.HealthPoints -= attackVal;
+
+            Console.WriteLine("{3} Attacks {0} with {1} for {2} damage",player.Name, attackName, attackVal, Name);
         }
 
         public void Heal()

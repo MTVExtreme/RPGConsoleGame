@@ -8,7 +8,7 @@ namespace ConsoleGame
 {
     class RandomEnemy : Enemy
     {
-        Dictionary<string, int> Attacks = new Dictionary<string, int>
+        public Dictionary<string, int> Attacks = new Dictionary<string, int>
             {
                 {"Bite", 5 },
                 {"Headbutt", 5 },

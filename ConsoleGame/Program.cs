@@ -13,8 +13,10 @@ namespace ConsoleGame
         public static PlayerClass player3;
 
         protected static int EnemyCount;
+        protected static int PlayerCount;
 
-        public static string Version = "0.6.42";
+
+        public static string Version = "0.7.0";
         #endregion
         static void Main(string[] args)
         {
@@ -50,7 +52,7 @@ namespace ConsoleGame
                 foreach (var item in combatOrder)
                 {
                     i++;
-                    Console.WriteLine("Order: {4} | Name: {0} | Speed: {1} | Unit ID: {2} | NPC: {3}", item.Key.Name, item.Key.Speed, item.Key.ID, item.Key.NPC);
+                    Console.WriteLine("Order: {4} | Name: {0} | Speed: {1} | Unit ID: {2} | NPC: {3}", item.Key.Name, item.Key.Speed, item.Key.ID, item.Key.NPC, i);
                 }
                 Console.ReadLine();
 #endif
@@ -67,9 +69,57 @@ namespace ConsoleGame
                         {
                             if (id > 2 && id < 6)
                             {
-                                //Console.WriteLine("ENEMY TURN!");
-                                //Console.ReadLine();
-                                Enemy currentEnemy = (Enemy)combatant.Key;
+                                int number = rnd.Next(1, 100);
+                                
+                                RandomEnemy currentEnemy = (RandomEnemy)combatant.Key;
+                                if (currentEnemy.HealthPoints >= (currentEnemy.MaxHealthPoints * .7))
+                                {
+                                    if (number >= 40)
+                                    {
+                                        EnemyAttacking(rnd, enemyList, currentEnemy);
+                                        
+
+                                    }
+                                    if (number >= 20 && number < 40)
+                                    {
+                                        Console.WriteLine("{0} Uses a Useless Special Attack cus no special attacks have been made this. Blame the Developers", currentEnemy.Name);
+                                        Console.ReadLine();
+                                    }
+                                    if (number < 20)
+                                    {
+                                        currentEnemy.Heal();
+                                    }
+                                }
+                                if (currentEnemy.HealthPoints <= (currentEnemy.MaxHealthPoints * .5))
+                                {
+                                    if (number >= 60)
+                                    {
+                                        Console.WriteLine("{0} Uses a Useless Special Attack cus no special attacks have been made this. Blame the Developers", currentEnemy.Name);
+                                        Console.ReadLine();
+                                    }
+                                    if (number >= 30 && number < 60)
+                                    {
+                                        EnemyAttacking(rnd, enemyList, currentEnemy);
+
+
+                                    }
+                                    if (number < 30)
+                                    {
+                                        currentEnemy.Heal();
+                                    }
+                                }
+                                if (currentEnemy.HealthPoints <= (currentEnemy.MaxHealthPoints * .3))
+                                {
+                                    if (number >= 30)
+                                    {
+                                        currentEnemy.Heal();
+                                    }
+                                    if (number < 30)
+                                    {
+                                        Console.WriteLine("{0} Uses a Useless Special Attack cus no special attacks have been made this. Blame the Developers", currentEnemy.Name);
+                                        Console.ReadLine();
+                                    }
+                                }
                             }
                             if (id < 3 && id > 0)
                             { 
@@ -108,6 +158,32 @@ namespace ConsoleGame
                     }
                 } while (battle == true);
 
+
+            }
+
+        }
+
+        private static void EnemyAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
+        {
+            int num = rnd.Next(0, PlayerCount);
+
+            //var num = currentEnemy.Att
+
+            if (num == 0)
+            {               
+                currentEnemy.RandomAttack(player1);
+                Console.ReadLine();
+            }
+            else if (num == 1)
+            {
+                currentEnemy.RandomAttack(player2);
+                Console.ReadLine();
+
+            }
+            else if (num == 2)
+            {
+                currentEnemy.RandomAttack(player3);
+                Console.ReadLine();
 
             }
 
@@ -472,6 +548,7 @@ namespace ConsoleGame
                 case 0:
                     TwoPlayers = true;
                     ThreePlayers = true;
+                    PlayerCount = 3;
                     player1 = Startup(false, rnd);//Player
                     player2 = Startup(true, rnd);//AI
                     player3 = Startup(true, rnd);//AI
@@ -479,6 +556,7 @@ namespace ConsoleGame
                 case 1:
                     TwoPlayers = true;
                     ThreePlayers = true;
+                    PlayerCount = 3;
                     player1 = Startup(false, rnd);//Player
                     player2 = Startup(false, rnd);//Player
                     player3 = Startup(true, rnd);//AI
@@ -486,6 +564,7 @@ namespace ConsoleGame
                 case 2:
                     TwoPlayers = true;
                     ThreePlayers = true;
+                    PlayerCount = 3;
                     player1 = Startup(false, rnd);//Player
                     player2 = Startup(false, rnd);//Player
                     player3 = Startup(false, rnd);//Player
@@ -493,11 +572,13 @@ namespace ConsoleGame
                 case 3:
                     TwoPlayers = false;
                     ThreePlayers = false;
+                    PlayerCount = 1;
                     player1 = Startup(false, rnd);//Player
                     break;
                 case 4:
                     TwoPlayers = true;
                     ThreePlayers = false;
+                    PlayerCount = 2;
                     player1 = Startup(false, rnd);//Player
                     player2 = Startup(false, rnd);//Player         
                     break;
