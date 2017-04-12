@@ -46,9 +46,11 @@ namespace ConsoleGame
 
                 var combatOrder = setCombatOrder(TwoPlayers, ThreePlayers, enemyList);
 #if DEBUG
+                int i = 0;
                 foreach (var item in combatOrder)
                 {
-                    Console.WriteLine("Name: {0} | Speed: {1} | Unit ID: {2} | NPC: {3}", item.Key.Name, item.Key.Speed, item.Key.ID, item.Key.NPC);
+                    i++;
+                    Console.WriteLine("Order: {4} | Name: {0} | Speed: {1} | Unit ID: {2} | NPC: {3}", item.Key.Name, item.Key.Speed, item.Key.ID, item.Key.NPC);
                 }
                 Console.ReadLine();
 #endif
@@ -65,9 +67,9 @@ namespace ConsoleGame
                         {
                             if (id > 2 && id < 6)
                             {
-                                Console.WriteLine("ENEMY TURN!");
-                                Console.ReadLine();
-                                //Enemy currentEnemy = (Enemy)combatant.Key;
+                                //Console.WriteLine("ENEMY TURN!");
+                                //Console.ReadLine();
+                                Enemy currentEnemy = (Enemy)combatant.Key;
                             }
                             if (id < 3 && id > 0)
                             { 

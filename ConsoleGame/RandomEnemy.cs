@@ -12,33 +12,49 @@ namespace ConsoleGame
             {
                 {"Bite", 5 },
                 {"Headbutt", 5 },
-                {"Whip", 10 }
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
-                //{"Bite", 5 },
-                //{"Headbutt", 5 },
-                //{"Whip", 10 },
+                {"Whip", 10 },
+                {"Stab", 12 },
+                {"Cut", 6 },
+                {"Flash", 3 },
+                {"Slash", 8 },
+                {"Slap", 1 },
+                {"Smash", 10 },
+                {"Acid", 15 },
+                {"Strike", 8 },
+                {"Infect", 12 },
+                {"Fire Breath", 10 },
+                {"Mangle", 9 },
+                {"Imbue", 6 },
+                {"Gnaw", 8 },
+                {"Slam", 6 },
+                {"Entangle", 6 },
+                {"Stampede", 15 },
+                {"Thunderclap", 15 },
+                {"Bomardment", 18 },
+                {"Plague", 15 },
+                {"Warcry", 5 },
+                {"Shiv", 3 },
+                {"Lightning Strike", 15 },
+                {"Nightmare", 7 },
+                {"Feign", 6 },
+                {"Lightning Bolt", 15 },
+                {"Freeze", 5 },
+                {"Scorch", 8 },
+                {"Burn", 5 },
+                {"Enthrall", 7 },
+                {"Suppressing Fire", 14 },
+                {"Shoot", 10 },
+                {"Blaze", 16 },
+                {"Rush", 12 },
+                {"Frenzy", 25 },
+                {"Exterminate", 30 }
 
             };
+
+        Dictionary<string, int> SpecialAttacks = new Dictionary<string, int>
+        {
+
+        };
 
         public List<string> MonsterName = new List<string>()
         {
@@ -59,7 +75,8 @@ namespace ConsoleGame
 "Lieth",    "Leud",    "Eldp",    "Slourd",    "Unte",    "Oatho",    "Rakd",
 "Acho",    "Seet",    "Thrayk",    "Emc",    "Josh",    "Clan",    "Eenga",
 "Odeno",    "Liy",    "Osulo",    "Ghac",    "Otury",    "Ingph",    "Biant",
-"Denll",    "Ingm",    "Chayt",    "Iash",    "Ooughe",    "Raylt",    "Aentha"
+"Denll",    "Ingm",    "Chayt",    "Iash",    "Ooughe",    "Raylt", "Bacon" ,
+"Dave",    "Aentha",   "Gwen",     "Gerda",   "Eva",   "Bruce Wayne", "Danny"
         };
 
         public List<string> MonsterType = new List<string>()

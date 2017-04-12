@@ -1,9 +1,3 @@
-c:\users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.exe.config
-c:\users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.exe
-c:\users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.pdb
-c:\users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.exe
-c:\users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.pdb
-c:\users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.csprojResolveAssemblyReference.cache
 C:\Users\MTV\Documents\Visual Studio 2017\Projects\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.exe.config
 C:\Users\MTV\Documents\Visual Studio 2017\Projects\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.exe
 C:\Users\MTV\Documents\Visual Studio 2017\Projects\ConsoleGame\ConsoleGame\bin\Debug\ConsoleGame.pdb
