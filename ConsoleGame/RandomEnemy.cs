@@ -53,7 +53,49 @@ namespace ConsoleGame
 
         Dictionary<string, int> SpecialAttacks = new Dictionary<string, int>
         {
-
+           { "Annihilation Dominator" , 35 },
+           { "Aero Executioner" , 20 },
+           { "Atomic Glow" , 18 },
+           { "Blasting Gush" , 15 },
+           { "Blaze Reaction" , 20 },
+           { "Chants of Darcarth" , 30 },
+           { "Deleting Spike" , 24 },
+           { "Deluding Yell" , 14 },
+           { "Device Blaster" , 15 },
+           { "Electron Cover" , 20 },
+           { "Fossil Chop" , 12 },
+           { "Punch Spear" , 26 },
+           { "Sentinel Elimination" , 22 },
+           { "Shocker Trick" , 14 },
+           { "Smashing Hypnotism" , 16 },
+           { "Close Encounter" , 15 },
+           { "Trickery Spear" , 35 },
+           { "Unified Charm" , 15 },
+           { "Verdant Mash" , 8 },
+           { "Viral Bullet" , 25 },
+           { "Asphyxiate" , 5 },
+           { "Assassinate" , 5 },
+           { "Savage Venom Fall" , 5 },
+           { "Phoenix Bullet" , 24 },
+           { "Bouncing Eruption of Evil Sharks" , 40 },
+           { "Harming Force of a True Bandicoot" , 50 },
+           { "Mind Bite" , 13 },
+           { "Colossal Phantom Strike" , 36 },
+           { "Light Raze" , 28 },
+           { "Scratching Impact of Diligent Needle" , 3 },
+           { "Camouflage Blitz" , 32 },
+           { "Beast Kick" , 29 },
+           { "Frying Fists of Corrupt Rain" , 30 },
+           { "Arising Burst of Gigantic Lightning" , 50 },
+           { "Sun Flash" , 48 },
+           { "Judgment Trap" , 46 },
+           { "Exorcism Shock" , 26 },
+           { "Retribution Blow" , 25 },
+           { "Glaring Fury Knock" , 23 },
+           { "Rapid Prison Charge" , 38 },
+           { "Panther Attack" , 26 },
+           { "Vortex Spear" , 24 },
+           { "Exorcism Blast" , 25 }
         };
 
         public List<string> MonsterName = new List<string>()
@@ -143,6 +185,11 @@ namespace ConsoleGame
         {
             Attack(p, Attacks, this.Name);
 
+        }
+
+        public void RandomSpecialAttack(PlayerClass p)
+        {
+            SpecialAttack(p, SpecialAttacks, this.Name);
         }
 
     }

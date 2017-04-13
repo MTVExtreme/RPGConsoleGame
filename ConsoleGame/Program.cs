@@ -82,7 +82,7 @@ namespace ConsoleGame
                                     }
                                     if (number >= 20 && number < 40)
                                     {
-                                        Console.WriteLine("{0} Uses a Useless Special Attack cus no special attacks have been made this. Blame the Developers", currentEnemy.Name);
+                                        EnemySpecialAttacking(rnd, enemyList, currentEnemy);
                                         Console.ReadLine();
                                     }
                                     if (number < 20)
@@ -94,7 +94,7 @@ namespace ConsoleGame
                                 {
                                     if (number >= 60)
                                     {
-                                        Console.WriteLine("{0} Uses a Useless Special Attack cus no special attacks have been made this. Blame the Developers", currentEnemy.Name);
+                                        EnemySpecialAttacking(rnd, enemyList, currentEnemy);
                                         Console.ReadLine();
                                     }
                                     if (number >= 30 && number < 60)
@@ -116,7 +116,7 @@ namespace ConsoleGame
                                     }
                                     if (number < 30)
                                     {
-                                        Console.WriteLine("{0} Uses a Useless Special Attack cus no special attacks have been made this. Blame the Developers", currentEnemy.Name);
+                                        EnemySpecialAttacking(rnd, enemyList, currentEnemy);
                                         Console.ReadLine();
                                     }
                                 }
@@ -183,6 +183,32 @@ namespace ConsoleGame
             else if (num == 2)
             {
                 currentEnemy.RandomAttack(player3);
+                Console.ReadLine();
+
+            }
+
+        }
+
+        private static void EnemySpecialAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
+        {
+            int num = rnd.Next(0, PlayerCount);
+
+            //var num = currentEnemy.Att
+
+            if (num == 0)
+            {
+                currentEnemy.RandomSpecialAttack(player1);
+                Console.ReadLine();
+            }
+            else if (num == 1)
+            {
+                currentEnemy.RandomSpecialAttack(player2);
+                Console.ReadLine();
+
+            }
+            else if (num == 2)
+            {
+                currentEnemy.RandomSpecialAttack(player3);
                 Console.ReadLine();
 
             }

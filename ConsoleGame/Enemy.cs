@@ -62,6 +62,19 @@ namespace ConsoleGame
             Console.WriteLine("{3} Attacks {0} with {1} for {2} damage",player.Name, attackName, attackVal, Name);
         }
 
+        public void SpecialAttack(PlayerClass player, Dictionary<string, int> dict, Object enemyName)
+        {
+
+
+            var singleAttack = dict.ElementAt(rnd.Next(dict.Count));
+            int attackVal = singleAttack.Value;
+            string attackName = singleAttack.Key;
+
+            player.HealthPoints -= attackVal;
+
+            Console.WriteLine("{3} Conducts on special attack {1} on {0} dealing {2} damage", player.Name, attackName, attackVal, Name);
+        }
+
         public void Heal()
         {
             Random rnd = new Random();
