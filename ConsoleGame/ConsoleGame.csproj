@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicRNG.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterTypes.cs" />
     <Compile Include="Enemy.cs" />

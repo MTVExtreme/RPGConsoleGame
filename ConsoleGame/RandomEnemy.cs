@@ -164,14 +164,14 @@ namespace ConsoleGame
         public string Type { get; set; }
 
 
-        public RandomEnemy(Random rnd)
+        public RandomEnemy(AdvancedRNG rnd)
         {
-            //Random rnd = new Random();
-            int hp = rnd.Next(20, 120);
-            int speed = rnd.Next(2, 18);
+            //AdvancedRNG rnd = new AdvancedRNG();
+            int hp = rnd.GetNext(20, 120);
+            int speed = rnd.GetNext(2, 18);
 
-            string name = MonsterName.ElementAt(rnd.Next(MonsterName.Count));
-            string type = MonsterType.ElementAt(rnd.Next(MonsterType.Count));
+            string name = MonsterName.ElementAt(rnd.GetNext(MonsterName.Count));
+            string type = MonsterType.ElementAt(rnd.GetNext(MonsterType.Count));
 
             this.Speed = speed;
             this.HealthPoints = hp;

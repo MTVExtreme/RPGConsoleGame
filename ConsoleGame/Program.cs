@@ -16,12 +16,12 @@ namespace ConsoleGame
         protected static int PlayerCount;
 
 
-        public static string Version = "0.7.0";
+        public static string Version = "0.8.0";
         #endregion
         static void Main(string[] args)
         {
             #region Startup Items
-            Random rnd = new Random();
+            AdvancedRNG rnd = new AdvancedRNG();
 
             bool TwoPlayers;
             bool ThreePlayers;
@@ -36,7 +36,7 @@ namespace ConsoleGame
 
             while (true)
             {
-                Random enemyRND = new Random();
+                AdvancedRNG enemyRND = new AdvancedRNG();
 
                 bool battle = true;
 
@@ -44,7 +44,7 @@ namespace ConsoleGame
                 //Renders Stats
                 DisplayStats(TwoPlayers, ThreePlayers, enemyList);
 
-                EnemyCount = enemyList.Count();
+                EnemyCount = enemyList.Count() - 1;
 
                 var combatOrder = setCombatOrder(TwoPlayers, ThreePlayers, enemyList);
 #if DEBUG
@@ -69,7 +69,7 @@ namespace ConsoleGame
                         {
                             if (id > 2 && id < 6)
                             {
-                                int number = rnd.Next(1, 100);
+                                int number = rnd.GetNext(1, 100);
                                 
                                 RandomEnemy currentEnemy = (RandomEnemy)combatant.Key;
                                 if (currentEnemy.HealthPoints >= (currentEnemy.MaxHealthPoints * .7))
@@ -163,9 +163,9 @@ namespace ConsoleGame
 
         }
 
-        private static void EnemyAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
+        private static void EnemyAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
         {
-            int num = rnd.Next(0, PlayerCount);
+            int num = rnd.GetNext(0, PlayerCount);
 
             //var num = currentEnemy.Att
 
@@ -189,9 +189,9 @@ namespace ConsoleGame
 
         }
 
-        private static void EnemySpecialAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
+        private static void EnemySpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
         {
-            int num = rnd.Next(0, PlayerCount);
+            int num = rnd.GetNext(0, PlayerCount);
 
             //var num = currentEnemy.Att
 
@@ -215,9 +215,9 @@ namespace ConsoleGame
 
         }
 
-        private static void NPCRandomAction(Random rnd, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant)
+        private static void NPCRandomAction(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant)
         {
-            int number = rnd.Next(1, 100);
+            int number = rnd.GetNext(1, 100);
             int num;
             PlayerClass currentPlayer = (PlayerClass)combatant.Key;
 
@@ -267,25 +267,25 @@ namespace ConsoleGame
 
         }
 
-        private static int NPCPlayerSpecialAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
+        private static int NPCPlayerSpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
         {
-            int num = rnd.Next(0, EnemyCount);
+            int num = rnd.GetNext(0, EnemyCount);
             if (num == 0)
             {
-                num = rnd.Next(0, 2);
+                num = rnd.GetNext(0, 2);
                 currentPlayer.SpecialAttack(enemyList["enemy0"], num, currentPlayer.SpecialAttacks, enemyList["enemy0"].Name);
                 Console.ReadLine();
             }
             else if (num == 1)
             {
-                num = rnd.Next(0, 2);
+                num = rnd.GetNext(0, 2);
                 currentPlayer.SpecialAttack(enemyList["enemy1"], num, currentPlayer.SpecialAttacks, enemyList["enemy1"].Name);
                 Console.ReadLine();
 
             }
             else if (num == 2)
             {
-                num = rnd.Next(0, 2);
+                num = rnd.GetNext(0, 2);
                 currentPlayer.SpecialAttack(enemyList["enemy2"], num, currentPlayer.SpecialAttacks, enemyList["enemy2"].Name);
                 Console.ReadLine();
 
@@ -294,26 +294,26 @@ namespace ConsoleGame
             return num;
         }
 
-        private static int NPCPlayerAttacking(Random rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
+        private static int NPCPlayerAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
         {
-            int num = rnd.Next(0, EnemyCount);
+            int num = rnd.GetNext(0, EnemyCount);
 
             if (num == 0)
             {
-                num = rnd.Next(0, 4);
+                num = rnd.GetNext(0, 4);
                 currentPlayer.Attack(enemyList["enemy0"], num, enemyList["enemy0"].Name);
                 Console.ReadLine();
             }
             else if (num == 1)
             {
-                num = rnd.Next(0, 4);
+                num = rnd.GetNext(0, 4);
                 currentPlayer.Attack(enemyList["enemy1"], num, enemyList["enemy1"].Name);
                 Console.ReadLine();
 
             }
             else if (num == 2)
             {
-                num = rnd.Next(0, 4);
+                num = rnd.GetNext(0, 4);
                 currentPlayer.Attack(enemyList["enemy2"], num, enemyList["enemy2"].Name);
                 Console.ReadLine();
 
@@ -322,10 +322,10 @@ namespace ConsoleGame
             return num;
         }
 
-        private static Dictionary<string, RandomEnemy> BattleCommenceNotice(Random enemyRND)
+        private static Dictionary<string, RandomEnemy> BattleCommenceNotice(AdvancedRNG enemyRND)
         {
             #region Battle Commence Notice
-            int enemies = enemyRND.Next(1, 4);
+            int enemies = enemyRND.GetNext(1, 4);
             Dictionary<string, RandomEnemy> enemyList = new Dictionary<string, RandomEnemy>();
             for (int i = 0; i < enemies; i++)
             {
@@ -567,7 +567,7 @@ namespace ConsoleGame
             #endregion
         }
 
-        private static void CreatePlayer(out bool TwoPlayers, out bool ThreePlayers, out PlayerClass player1, ref PlayerClass player2, ref PlayerClass player3, int gameType, Random rnd)
+        private static void CreatePlayer(out bool TwoPlayers, out bool ThreePlayers, out PlayerClass player1, ref PlayerClass player2, ref PlayerClass player3, int gameType, AdvancedRNG rnd)
         {
             switch (gameType)
             {
@@ -618,7 +618,7 @@ namespace ConsoleGame
             }
         }
 
-        private static PlayerClass Startup(bool isAi, Random rnd)
+        private static PlayerClass Startup(bool isAi, AdvancedRNG rnd)
         {
 
             #region Local Variables + AI Name + Faction Lists
@@ -675,15 +675,15 @@ namespace ConsoleGame
             if (isAi == true)
             {
 
-                int aiName = rnd.Next(aiNameList.Count);
-                int aiFaction = rnd.Next(aiFactionList.Count);
+                int aiName = rnd.GetNext(aiNameList.Count - 1);
+                int aiFaction = rnd.GetNext(aiFactionList.Count - 1);
 
-                faction = aiFactionList.ElementAt(aiFaction); //random AI Name
-                name = aiNameList.ElementAt(aiName); //random AI Faction
+                faction = aiFactionList.ElementAt(aiFaction); //AdvancedRNG AI Name
+                name = aiNameList.ElementAt(aiName); //AdvancedRNG AI Faction
                 npc = true;
 
 
-                playerType = rnd.Next(4);
+                playerType = rnd.GetNext(4);
 
             }
             else

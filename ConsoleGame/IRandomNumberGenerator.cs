@@ -12,7 +12,7 @@ namespace ConsoleGame
         int GetNext(int min, int max);
     }
 
-    class BasicRNG : IRandomNumberGenerator
+    public class BasicRNG : IRandomNumberGenerator
     {
         public int GetNext(int min, int max)
         {
@@ -22,8 +22,23 @@ namespace ConsoleGame
 
     public class AdvancedRNG : IRandomNumberGenerator
     {
-        int IRandomNumberGenerator.GetNext(int min, int max)
+        public int GetNext(int min, int max)
         {
+            var buffer = new byte[4];
+
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(buffer);
+            }
+
+            var rand = Math.Abs(BitConverter.ToInt32(buffer, 0));
+
+            return Math.Abs(min + (rand % (max - min + 1)));
+        }
+
+        public int GetNext(int max)
+        {
+            int min = 0;
             var buffer = new byte[4];
 
             using (var rng = new RNGCryptoServiceProvider())
