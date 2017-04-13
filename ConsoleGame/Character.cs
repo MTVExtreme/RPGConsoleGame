@@ -10,6 +10,7 @@
         public int MaxHealthPoints { get; set; }
         public int Speed { get; set; }
         public bool NPC { get; set; }
+        public bool IsDead { get; set; }
 
     }
 }
