@@ -46,6 +46,7 @@
     <Compile Include="CharacterTypes.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Human.cs" />
+    <Compile Include="IRandomNumberGenerator.cs" />
     <Compile Include="Mage.cs" />
     <Compile Include="Ninja.cs" />
     <Compile Include="Paladin.cs" />

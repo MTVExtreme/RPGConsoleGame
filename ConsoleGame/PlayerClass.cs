@@ -116,8 +116,8 @@ namespace ConsoleGame
 
         public void Heal()
         {
-            Random rnd = new Random();
-            int hp = rnd.Next(5, 70);
+            AdvancedRNG rnd = new AdvancedRNG();
+            int hp = rnd.GetNext(5, 70);
             this.HealthPoints += hp;
 
             Console.WriteLine("{0} healed {1} HP.", this.Name, hp);
