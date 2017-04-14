@@ -31,7 +31,7 @@ namespace ConsoleGame
 
             int gameType = WelcomeScreen();
             CreatePlayer(out TwoPlayers, out ThreePlayers, out player1, ref player2, ref player3, gameType, rnd);
-            
+
             player1.ID = 0;
             if (TwoPlayers == true) player2.ID = 1;
             if (ThreePlayers == true) player3.ID = 2;
@@ -48,7 +48,7 @@ namespace ConsoleGame
                 //Renders Stats
                 DisplayStats(TwoPlayers, ThreePlayers, enemyList);
 
-                EnemyCount = enemyList.Count() - 1;
+                EnemyCount = enemyList.Count() ;
 
                 var combatOrder = setCombatOrder(TwoPlayers, ThreePlayers, enemyList);
 #if DEBUG
@@ -125,6 +125,7 @@ namespace ConsoleGame
                         {
                             combatant.Key.IsDead = true;
                             Console.WriteLine("{0} Is Dead and cannot make a move", combatant.Key.Name);
+                            Console.ReadLine();
                         }
                         //Failed
                         else
@@ -142,6 +143,13 @@ namespace ConsoleGame
 
             }
 
+            GameOver();
+
+        }
+
+        private static void GameOver()
+        {
+            Console.Clear();
             Console.WriteLine(
 @"Your party has parished to the never ending herds. Do not fear adventurer
 your legacy will still live on. You have existed in the world only to
@@ -152,8 +160,20 @@ of those who you have encountered along your journey.
 
                 See You In The Next Life Adventurer");
             Console.ReadLine();
-            
-
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(@"
+  ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▒█████   ██▒   █▓▓█████  ██▀███  
+ ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀    ▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒
+▒██░▄▄▄░▒██  ▀█▄  ▓██    ▓██░▒███      ▒██░  ██▒ ▓██  █▒░▒███   ▓██ ░▄█ ▒
+░▓█  ██▓░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄    ▒██   ██░  ▒██ █░░▒▓█  ▄ ▒██▀▀█▄  
+░▒▓███▀▒ ▓█   ▓██▒▒██▒   ░██▒░▒████▒   ░ ████▓▒░   ▒▀█░  ░▒████▒░██▓ ▒██▒
+ ░▒   ▒  ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░   ░ ▒░▒░▒░    ░ ▐░  ░░ ▒░ ░░ ▒▓ ░▒▓░
+  ░   ░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░     ░ ▒ ▒░    ░ ░░   ░ ░  ░  ░▒ ░ ▒░
+░ ░   ░   ░   ▒   ░      ░      ░      ░ ░ ░ ▒       ░░     ░     ░░   ░ 
+      ░       ░  ░       ░      ░  ░       ░ ░        ░     ░  ░   ░     
+                                                     ░                   ");
+            Console.ReadLine();
         }
 
         private static bool CheckLoseBattle(bool TwoPlayers, bool ThreePlayers, bool battle)
@@ -298,7 +318,7 @@ of those who you have encountered along your journey.
 
         private static void EnemySpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
         {
-            int num = rnd.GetNext(0, PlayerCount - 1);
+            int num = rnd.GetNext(0, PlayerCount );
 
 
             if (num == 0)
@@ -489,7 +509,7 @@ of those who you have encountered along your journey.
 
                     currentPlayer.ReadAttacks();
                     int num = Int32.Parse(Console.ReadLine());
-                    num = num - 1;
+                    
 
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
 
@@ -514,7 +534,7 @@ of those who you have encountered along your journey.
 
                     currentPlayer.ReadSpecialAttacks();
                     int num = Int32.Parse(Console.ReadLine());
-                    num = num - 1;
+                  
 
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
 
@@ -781,8 +801,8 @@ of those who you have encountered along your journey.
             if (isAi == true)
             {
 
-                int aiName = rnd.GetNext(aiNameList.Count - 1);
-                int aiFaction = rnd.GetNext(aiFactionList.Count - 1);
+                int aiName = rnd.GetNext(aiNameList.Count );
+                int aiFaction = rnd.GetNext(aiFactionList.Count );
 
                 faction = aiFactionList.ElementAt(aiFaction); //AdvancedRNG AI Name
                 name = aiNameList.ElementAt(aiName); //AdvancedRNG AI Faction
