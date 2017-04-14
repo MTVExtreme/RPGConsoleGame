@@ -53,13 +53,20 @@ namespace ConsoleGame
         {
             
 
-            var singleAttack = dict.ElementAt(rnd.GetNext(dict.Count));
+            var singleAttack = dict.ElementAt(rnd.GetNext(dict.Count ));
             int attackVal = singleAttack.Value;
             string attackName = singleAttack.Key;
 
             player.HealthPoints -= attackVal;
 
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("##############################################");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("{3} Attacks {0} with {1} for {2} damage",player.Name, attackName, attackVal, Name);
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("##############################################");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
         public void SpecialAttack(PlayerClass player, Dictionary<string, int> dict, Object enemyName)
@@ -71,8 +78,13 @@ namespace ConsoleGame
             string attackName = singleAttack.Key;
 
             player.HealthPoints -= attackVal;
-
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("########################################################");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("{3} Conducts on special attack {1} on {0} dealing {2} damage", player.Name, attackName, attackVal, Name);
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("########################################################@");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public void Heal()

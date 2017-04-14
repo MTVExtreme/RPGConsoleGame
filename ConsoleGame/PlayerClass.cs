@@ -96,7 +96,13 @@ namespace ConsoleGame
             int attackVal = singleAttack.Value;
             string attackName = singleAttack.Key;
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("##############################################");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("{3} Attacks {0} with {1} for {2} damage", player.Name, attackName, attackVal, this.Name);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("##############################################");
+            Console.ForegroundColor = ConsoleColor.White;
 
             player.HealthPoints -= attackVal;
         }
@@ -109,7 +115,13 @@ namespace ConsoleGame
             int attackVal = singleAttack.Value;
             string attackName = singleAttack.Key;
 
-            Console.WriteLine("{3} Attacks {0} with {1} for {2} damage", player.Name, attackName, attackVal, this.Name);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("##############################################");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("{3} Conducts the special attack {1} on {0} dealing {2} damage", player.Name, attackName, attackVal, this.Name);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("##############################################");
+            Console.ForegroundColor = ConsoleColor.White;
 
             player.HealthPoints -= attackVal;
         }
