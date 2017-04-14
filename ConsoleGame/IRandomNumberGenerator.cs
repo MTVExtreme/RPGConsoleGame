@@ -41,6 +41,8 @@ namespace ConsoleGame
             int min = 0;
             var buffer = new byte[4];
 
+            max--;
+
             using (var rng = new RNGCryptoServiceProvider())
             {
                 rng.GetBytes(buffer);
