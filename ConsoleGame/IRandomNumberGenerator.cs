@@ -41,8 +41,6 @@ namespace ConsoleGame
             int min = 0;
             var buffer = new byte[4];
 
-            max--;
-
             using (var rng = new RNGCryptoServiceProvider())
             {
                 rng.GetBytes(buffer);
@@ -50,7 +48,7 @@ namespace ConsoleGame
 
             var rand = Math.Abs(BitConverter.ToInt32(buffer, 0));
 
-            return Math.Abs(min + (rand % (max - min + 1)));
+            return Math.Abs(min + (rand % (max - min)));
         }
     }
 }
