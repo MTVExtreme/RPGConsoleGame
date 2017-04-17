@@ -18,7 +18,7 @@ namespace ConsoleGame
         protected static bool HasLost;
 
 
-        public static string Version = "0.9.18";
+        public static string Version = "0.9.22";
         #endregion
         static void Main(string[] args)
         {
@@ -52,11 +52,11 @@ namespace ConsoleGame
         private static int WelcomeScreen()
         {
             int input;
-            while(true)
-                { 
-                    Console.WriteLine("Welcome to DURF (Deadly Underground Reference Fighting)");
-                    Console.WriteLine("Version: {0} | Author: Tyler Vermillion ©2017-{1}", Version, DateTime.Now.Year);
-                    string durfFlash = @"
+            while (true)
+            {
+                Console.WriteLine("Welcome to DURF (Deadly Underground Reference Fighting)");
+                Console.WriteLine("Version: {0} | Author: Tyler Vermillion ©2017-{1}", Version, DateTime.Now.Year);
+                string durfFlash = @"
                                                                                     
 DDDDDDDDDDDDD        UUUUUUUU     UUUUUUUURRRRRRRRRRRRRRRRR   FFFFFFFFFFFFFFFFFFFFFF
 D::::::::::::DDD     U::::::U     U::::::UR::::::::::::::::R  F::::::::::::::::::::F
@@ -89,8 +89,8 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                 if (Int32.TryParse(Console.ReadLine(), out input))
                 {
-                    if(input < 4 && input >= 0 )
-                    {                        
+                    if (input < 4 && input >= 0)
+                    {
                         break;
                     }
                 }
@@ -187,21 +187,21 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                     Console.Clear();
 
-                    
+
                     Console.WriteLine("Your player name is : {0}\nFrom the faction/guild: {1}\nAnd their class is: {2}\nDo you want to change this?", name, faction, type);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("|--Type 0 for no. | Type 1 for yes.--|");
                     Console.ForegroundColor = ConsoleColor.White;
-                    if(Int32.TryParse(Console.ReadLine(), out reTry))
+                    if (Int32.TryParse(Console.ReadLine(), out reTry))
                     {
-                        if(reTry == 0)
+                        if (reTry == 0)
                         {
                             Console.WriteLine("Input Confirmed. Moving On");
                             Thread.Sleep(1500);
                             break;
                         }
-                        if(reTry == 1)
-                        { 
+                        if (reTry == 1)
+                        {
                             Console.WriteLine("Input Confirmed. Remaking Player");
                         }
                         else Console.WriteLine("Invalid Input Remaking Player");
@@ -316,7 +316,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             }
         }
 
-        //Starts New Battle
+        //Starts New Battle And Generates Enemies
         private static void NewBattle(AdvancedRNG rnd, bool TwoPlayers, bool ThreePlayers)
         {
             AdvancedRNG enemyRND = new AdvancedRNG();
@@ -358,15 +358,15 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             }
 
             enemyList.ElementAt(0).Value.ID = 3;
-            if (enemies > 1)
+            if (enemies > 2)
             {
                 enemyList.ElementAt(1).Value.ID = 4;
             }
-            if (enemies > 2)
+            if (enemies > 3)
             {
                 enemyList.ElementAt(2).Value.ID = 5;
             }
-            if (enemies > 3)
+            if (enemies > 4)
             {
                 enemyList.ElementAt(3).Value.ID = 6;
             }
@@ -395,7 +395,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                 if (combatant.Key.NPC == true && combatant.Key.HealthPoints > 0)
                 {
                     //Enemy Random Decision
-                    if (id > 2 && id < 6)
+                    if (id > 2 && id < 7)
                     {
                         int number = rnd.GetNext(1, 100);
 
@@ -552,11 +552,11 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         //Goes over Enemy's Normal Attack
         private static void EnemyAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
         {
-            int num = rnd.GetNext(0, PlayerCount -1);
+            int num = rnd.GetNext(0, PlayerCount - 1);
 
 
             if (num == 0)
-            {               
+            {
                 currentEnemy.RandomAttack(player1);
                 Console.ReadLine();
             }
@@ -578,7 +578,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         //Goes over Enemy's Special Attack
         private static void EnemySpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
         {
-            int num = rnd.GetNext(0, PlayerCount );
+            int num = rnd.GetNext(0, PlayerCount);
 
 
             if (num == 0)
@@ -657,31 +657,36 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         //Friendly Parnter Special Attacking
         private static int NPCPlayerSpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
         {
-            int num = rnd.GetNext(0, EnemyCount);
-            if (num == 0)
+            int num = rnd.GetNext(1, EnemyCount);
+            int atk;
+            if (num == 1)
             {
-                num = rnd.GetNext(0, 2);
+                atk = rnd.GetNext(0, 2);
                 currentPlayer.SpecialAttack(enemyList["enemy0"], num, currentPlayer.SpecialAttacks, enemyList["enemy0"].Name);
                 Console.ReadLine();
             }
-            else if (num == 1)
+            else if (num == 2)
             {
-                num = rnd.GetNext(0, 2);
+                atk = rnd.GetNext(0, 2);
                 currentPlayer.SpecialAttack(enemyList["enemy1"], num, currentPlayer.SpecialAttacks, enemyList["enemy1"].Name);
                 Console.ReadLine();
 
             }
-            else if (num == 2)
+            else if (num == 3)
             {
-                num = rnd.GetNext(0, 2);
+                atk = rnd.GetNext(0, 2);
                 currentPlayer.SpecialAttack(enemyList["enemy2"], num, currentPlayer.SpecialAttacks, enemyList["enemy2"].Name);
                 Console.ReadLine();
             }
-            else if (num == 3)
+            else if (num == 4)
             {
-                num = rnd.GetNext(0, 2);
+                atk = rnd.GetNext(0, 2);
                 currentPlayer.SpecialAttack(enemyList["enemy3"], num, currentPlayer.SpecialAttacks, enemyList["enemy3"].Name);
                 Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("This is Not supposed to happen");
             }
 
             return num;
@@ -690,34 +695,39 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         //Friendly Parnter Normal Attacking
         private static int NPCPlayerAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
         {
-            int num = rnd.GetNext(0, EnemyCount);
+            int num = rnd.GetNext(1, EnemyCount);
+            int atk;
 
-            if (num == 0)
+            if (num == 1)
             {
                 num = rnd.GetNext(0, 4);
                 currentPlayer.Attack(enemyList["enemy0"], num, enemyList["enemy0"].Name);
                 Console.ReadLine();
             }
-            else if (num == 1)
-            {
-                num = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy1"], num, enemyList["enemy1"].Name);
-                Console.ReadLine();
-
-            }
             else if (num == 2)
             {
-                num = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy2"], num, enemyList["enemy2"].Name);
+                atk = rnd.GetNext(0, 4);
+                currentPlayer.Attack(enemyList["enemy1"], num, enemyList["enemy1"].Name);
                 Console.ReadLine();
 
             }
             else if (num == 3)
             {
-                num = rnd.GetNext(0, 4);
+                atk = rnd.GetNext(0, 4);
+                currentPlayer.Attack(enemyList["enemy2"], num, enemyList["enemy2"].Name);
+                Console.ReadLine();
+
+            }
+            else if (num == 4)
+            {
+                atk = rnd.GetNext(0, 4);
                 currentPlayer.Attack(enemyList["enemy3"], num, enemyList["enemy3"].Name);
                 Console.ReadLine();
 
+            }
+            else
+            { 
+                Console.WriteLine("This is Not supposed to happen");
             }
 
             return num;
@@ -740,73 +750,103 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                 Console.WriteLine("0: Attacks");
                 Console.WriteLine("1: Special Attacks");
                 Console.WriteLine("2: Heal");
-                Console.WriteLine("3: Skip To Boss");
+                //Console.WriteLine("3: Skip To Boss");
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("_____________________________________________________________________________");
                 Console.ForegroundColor = ConsoleColor.White;
 
                 #endregion
 
-                int value = Int32.Parse(Console.ReadLine());
-                if (value == 0)
+                int value;
+                if (Int32.TryParse(Console.ReadLine(), out value))
                 {
-                    int attacker;
-                    #region Player Attacking using Generic Attacks
-
-                    currentPlayer.ReadAttacks();
-                    int num = Int32.Parse(Console.ReadLine());
-                    
-
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-
-                    Console.WriteLine("Pick an Enemy: ");
-                    foreach (var count in enemyList)
+                    if (value == 0)
                     {
-                        Console.WriteLine("{0}: Attack {1} {2}", x, count.Value.Name, count.Value.Type);
-                        x++;
+                        while (true)
+                        {
+                            int attacker;
+                            #region Player Attacking using Generic Attacks
+
+                            currentPlayer.ReadAttacks();
+                            int num;
+                            if (Int32.TryParse(Console.ReadLine(), out num) && num >= 0 && num <= enemyList.Count)
+                            {
+                                while (true)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+                                    Console.WriteLine("Pick an Enemy: ");
+                                    foreach (var count in enemyList)
+                                    {
+                                        Console.WriteLine("{0}: Attack {1} {2}", x, count.Value.Name, count.Value.Type);
+                                        x++;
+                                    }
+
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    //attacker = Int32.Parse(Console.ReadLine());
+                                    if (Int32.TryParse(Console.ReadLine(), out attacker))
+                                    {
+                                        running = Attacking(enemyList, currentPlayer, running, attacker, num);
+                                        break;
+                                    }
+                                    
+                                }
+                                break;
+                                #endregion
+                            }
+                        }
+
+
                     }
-                    Console.ForegroundColor = ConsoleColor.White;
-                    attacker = Int32.Parse(Console.ReadLine());
-
-                    running = Attacking(enemyList, currentPlayer, running, attacker, num);
-
-                    #endregion
-
-
-                }
-                else if (value == 1)
-                {
-                    #region Player Attacking using Special Attacks
-
-                    currentPlayer.ReadSpecialAttacks();
-                    int num = Int32.Parse(Console.ReadLine());
-                  
-
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-
-                    Console.WriteLine("Pick an Enemy: ");
-                    foreach (var count in enemyList)
+                    else if (value == 1)
                     {
-                        Console.WriteLine("{0}: Attack {1} {2}", x, count.Value.Name, count.Value.Type);
-                        x++;
+                        #region Player Attacking using Special Attacks
+
+                        while (true)
+                        {
+                            int attacker;
+                           
+
+                            currentPlayer.ReadSpecialAttacks();
+                            int num;
+                            if (Int32.TryParse(Console.ReadLine(), out num) && num >= 0 && num <= enemyList.Count)
+                            {
+                                while (true)
+                                {
+
+                                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+                                    Console.WriteLine("Pick an Enemy: ");
+                                    foreach (var count in enemyList)
+                                    {
+                                        Console.WriteLine("{0}: Attack {1} {2}", x, count.Value.Name, count.Value.Type);
+                                        x++;
+                                    }
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    if (Int32.TryParse(Console.ReadLine(), out attacker))
+                                    {
+                                        running = SpecialAttacking(enemyList, currentPlayer, running, num, attacker);
+                                        break;
+                                    }
+                                }
+                                break;
+
+                            }
+                        }
+
+                        #endregion
+
+
                     }
-                    Console.ForegroundColor = ConsoleColor.White;
-                    int attacker = Int32.Parse(Console.ReadLine());
+                    else if (value == 2)
+                    {
+                        currentPlayer.Heal();
+                        running = false;
 
-                    running = SpecialAttacking(enemyList, currentPlayer, running, num, attacker);
-
-                    #endregion
-
-
+                    }
                 }
-                else if (value == 2)
-                {
-                    currentPlayer.Heal();
-                    running = false;
 
-                }
-                
-                    
+
             }
         }
 
@@ -900,7 +940,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         public static List<KeyValuePair<Character, int>> setCombatOrder(bool TwoPlayers, bool ThreePlayers, Dictionary<string, RandomEnemy> enemyList)
         {
             Dictionary<Character, int> order = new Dictionary<Character, int>();
-            
+
 
             order.Add(player1, player1.Speed);
             if (TwoPlayers == true)
@@ -1024,5 +1064,6 @@ of those who you have encountered along your journey.
 
 
     }
+
 
 }

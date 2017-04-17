@@ -83,7 +83,7 @@ namespace ConsoleGame
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("{3} Conducts on special attack {1} on {0} dealing {2} damage", player.Name, attackName, attackVal, Name);
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("########################################################@");
+            Console.WriteLine("########################################################");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -92,9 +92,13 @@ namespace ConsoleGame
             AdvancedRNG rnd = new AdvancedRNG();
             int hp = rnd.GetNext(5, 70);
             this.HealthPoints += hp;
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("########################################################");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("{0} healed {1} HP.", this.Name, hp);
-            Thread.Sleep(4000);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("########################################################");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

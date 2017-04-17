@@ -48,7 +48,9 @@ namespace ConsoleGame
 
             var rand = Math.Abs(BitConverter.ToInt32(buffer, 0));
 
-            return Math.Abs(min + (rand % (max - min)));
+            max -= 1;
+
+            return Math.Abs(min + (rand % (max - min + 1)));
         }
     }
 }
