@@ -769,7 +769,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                             currentPlayer.ReadAttacks();
                             int num;
-                            if (Int32.TryParse(Console.ReadLine(), out num) && num >= 0 && num <= enemyList.Count)
+                            if (Int32.TryParse(Console.ReadLine(), out num) && num >= 0 && num <= 4)
                             {
                                 while (true)
                                 {
@@ -784,7 +784,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                                     Console.ForegroundColor = ConsoleColor.White;
                                     //attacker = Int32.Parse(Console.ReadLine());
-                                    if (Int32.TryParse(Console.ReadLine(), out attacker))
+                                    if (Int32.TryParse(Console.ReadLine(), out attacker) && num >= 0 && num <= enemyList.Count)
                                     {
                                         running = Attacking(enemyList, currentPlayer, running, attacker, num);
                                         break;
@@ -809,7 +809,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                             currentPlayer.ReadSpecialAttacks();
                             int num;
-                            if (Int32.TryParse(Console.ReadLine(), out num) && num >= 0 && num <= enemyList.Count)
+                            if (Int32.TryParse(Console.ReadLine(), out num) && num >= 0 && num <= 2)
                             {
                                 while (true)
                                 {
@@ -823,7 +823,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                                         x++;
                                     }
                                     Console.ForegroundColor = ConsoleColor.White;
-                                    if (Int32.TryParse(Console.ReadLine(), out attacker))
+                                    if (Int32.TryParse(Console.ReadLine(), out attacker) && num >= 0 && num <= enemyList.Count)
                                     {
                                         running = SpecialAttacking(enemyList, currentPlayer, running, num, attacker);
                                         break;

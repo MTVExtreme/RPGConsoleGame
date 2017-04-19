@@ -99,6 +99,7 @@ namespace ConsoleGame
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("########################################################");
             Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
         }
     }
 }
