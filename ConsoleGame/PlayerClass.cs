@@ -46,11 +46,13 @@ namespace ConsoleGame
             Console.ForegroundColor = ConsoleColor.White;
             foreach (var attack in Attacks)
             {
-                num++;
                 Console.WriteLine("{0}: {1}", num, attack.Key);
+                num++;
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("99: Back");
+            Console.WriteLine("99: Back to First Menu");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
         public virtual void ReadSpecialAttacks()
@@ -61,9 +63,9 @@ namespace ConsoleGame
             Console.WriteLine("Special Attacks:");
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             foreach (var attack in SpecialAttacks)
-            {
-                num++;
+            {              
                 Console.WriteLine("{0}: {1}", num, attack.Key);
+                num++;
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("99: Back");
@@ -127,12 +129,23 @@ namespace ConsoleGame
         }
 
         public void Heal()
+
         {
             AdvancedRNG rnd = new AdvancedRNG();
-            int hp = rnd.GetNext(5, 70);
-            this.HealthPoints += hp;
+            double hp = rnd.GetNext(5, 70);
+            if((hp + HealthPoints) >= (MaxHealthPoints * 1.2))
+            {
+                hp = ((MaxHealthPoints * 1.2) - HealthPoints);
+                this.HealthPoints = this.MaxHealthPoints * 1.2;
+            }
+            else this.HealthPoints += hp;
 
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("##############################################");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("{0} healed {1} HP.", this.Name, hp);
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("##############################################");
             Console.ReadLine();
         }
     }

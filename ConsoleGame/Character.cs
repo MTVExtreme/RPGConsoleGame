@@ -6,8 +6,8 @@
         public string Name { get; set; }
         public string Faction { get; set; }
         public int Level { get; set; }
-        public int HealthPoints { get; set; }
-        public int MaxHealthPoints { get; set; }
+        public double HealthPoints { get; set; }
+        public double MaxHealthPoints { get; set; }
         public int Speed { get; set; }
         public bool NPC { get; set; }
         public bool IsDead { get; set; }
