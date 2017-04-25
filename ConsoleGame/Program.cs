@@ -18,7 +18,7 @@ namespace ConsoleGame
         protected static bool HasLost;
 
 
-        public static string Version = "0.9.22";
+        public static string Version = "0.10.03";
         #endregion
         static void Main(string[] args)
         {
@@ -662,26 +662,26 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             if (num == 1)
             {
                 atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy0"], num, currentPlayer.SpecialAttacks, enemyList["enemy0"].Name);
+                currentPlayer.SpecialAttack(enemyList["enemy0"], atk, currentPlayer.SpecialAttacks, enemyList["enemy0"].Name);
                 Console.ReadLine();
             }
             else if (num == 2)
             {
                 atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy1"], num, currentPlayer.SpecialAttacks, enemyList["enemy1"].Name);
+                currentPlayer.SpecialAttack(enemyList["enemy1"], atk, currentPlayer.SpecialAttacks, enemyList["enemy1"].Name);
                 Console.ReadLine();
 
             }
             else if (num == 3)
             {
                 atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy2"], num, currentPlayer.SpecialAttacks, enemyList["enemy2"].Name);
+                currentPlayer.SpecialAttack(enemyList["enemy2"], atk, currentPlayer.SpecialAttacks, enemyList["enemy2"].Name);
                 Console.ReadLine();
             }
             else if (num == 4)
             {
                 atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy3"], num, currentPlayer.SpecialAttacks, enemyList["enemy3"].Name);
+                currentPlayer.SpecialAttack(enemyList["enemy3"], atk, currentPlayer.SpecialAttacks, enemyList["enemy3"].Name);
                 Console.ReadLine();
             }
             else
@@ -707,27 +707,28 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             else if (num == 2)
             {
                 atk = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy1"], num, enemyList["enemy1"].Name);
+                currentPlayer.Attack(enemyList["enemy1"], atk, enemyList["enemy1"].Name);
                 Console.ReadLine();
 
             }
             else if (num == 3)
             {
                 atk = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy2"], num, enemyList["enemy2"].Name);
+                currentPlayer.Attack(enemyList["enemy2"], atk, enemyList["enemy2"].Name);
                 Console.ReadLine();
 
             }
             else if (num == 4)
             {
                 atk = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy3"], num, enemyList["enemy3"].Name);
+                currentPlayer.Attack(enemyList["enemy3"], atk, enemyList["enemy3"].Name);
                 Console.ReadLine();
 
             }
             else
             { 
                 Console.WriteLine("This is Not supposed to happen");
+                Console.ReadLine();
             }
 
             return num;
