@@ -117,6 +117,8 @@ namespace ConsoleGame
             int attackVal = singleAttack.Value;
             string attackName = singleAttack.Key;
 
+
+           
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("##############################################");
             Console.ForegroundColor = ConsoleColor.White;
