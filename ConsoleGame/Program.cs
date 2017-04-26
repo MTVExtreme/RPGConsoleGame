@@ -7,6 +7,20 @@ namespace ConsoleGame
 {
     class Program
     {
+        /*
+            Welcome to the Code of DURF created by Tyler Vermilion and the Movement and map by Chris Sullivan
+            Feel free to use parts of this for inspiration or for your own project.
+            Dislaimer however, this code is by far not the cleanest it could have been and needs to be redone sometime.
+            By the time you read this I should have added comments explaining each part of the application.
+            
+            Check out my Github here: https://github.com/MTVExtreme || Portfoilio: https://mtvextreme.github.io/
+            Check out my Linked.In here: https://www.linkedin.com/in/michael-vermillion-0121a412a/
+
+            Thanks for taking your time to read my code and to play my Console Game.
+
+            If you see any bugs in my code you may contact me about them, or you may fix it yourself and issue a pull request.
+            I may go back later and remake the project in a much cleaner way once I have spare time and have more expirence.
+        */
         #region Public Variables
         public static PlayerClass player1;
         public static PlayerClass player2;
@@ -17,8 +31,8 @@ namespace ConsoleGame
 
         protected static bool HasLost;
 
-
-        public static string Version = "0.12.15";
+        //Current Version Displayed in game. This is purely a string and for informal tracking of the current version of the game.
+        public static string Version = "0.12.16";
         #endregion
         static void Main(string[] args)
         {
@@ -359,15 +373,15 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             }
 
             enemyList.ElementAt(0).Value.ID = 3;
-            if (enemies > 2)
+            if (enemies >= 2)
             {
                 enemyList.ElementAt(1).Value.ID = 4;
             }
-            if (enemies > 3)
+            if (enemies >= 3)
             {
                 enemyList.ElementAt(2).Value.ID = 5;
             }
-            if (enemies > 4)
+            if (enemies >= 4)
             {
                 enemyList.ElementAt(3).Value.ID = 6;
             }
@@ -1027,7 +1041,6 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
             List<KeyValuePair<Character, int>> combatOrder = order.ToList();
 
-            //var combatOrder = order.ToList();
 
             combatOrder.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
 
