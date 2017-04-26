@@ -18,7 +18,7 @@ namespace ConsoleGame
         protected static bool HasLost;
 
 
-        public static string Version = "0.12.07";
+        public static string Version = "0.12.15";
         #endregion
         static void Main(string[] args)
         {
@@ -391,9 +391,10 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                 string playerTurn;
                 int id = combatant.Key.ID;
 
-                //Checks for winning/Losing battle before each action
+                //Checks for winning/Losing battle
                 battle = CheckLoseBattle(TwoPlayers, ThreePlayers, battle);
                 battle = CheckWinBattle(battle, enemyList);
+                if (battle == false) break;
 
                 if (combatant.Key.HealthPoints <= 0)
                 {
@@ -460,7 +461,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                     throw new FormatException();
                 }
 
-                if (battle == false) break;
+
             }
             
 
@@ -515,7 +516,6 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             if (number < 30)
             {
                 EnemySpecialAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
-                Console.ReadLine();
             }
         }
 
@@ -525,7 +525,6 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             if (number >= 60)
             {
                 EnemySpecialAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
-                Console.ReadLine();
             }
             if (number >= 30 && number < 60)
             {
@@ -551,7 +550,6 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             if (number >= 20 && number < 40)
             {
                 EnemySpecialAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
-                Console.ReadLine();
             }
             if (number < 20)
             {
@@ -626,7 +624,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         }
 
         //AI NPC Partner Actions
-        private static void NPCRandomAction(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant, bool TwoPlayer, bool ThreePlayer)
+        private static void NPCRandomAction(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant, bool TwoPlayers, bool ThreePlayers)
         {
             int number = rnd.GetNext(1, 100);
             PlayerClass currentPlayer = (PlayerClass)combatant.Key;
@@ -635,15 +633,17 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             {
                 if (number >= 40)
                 {
-                    NPCPlayerAttacking(rnd, enemyList, currentPlayer, TwoPlayer, ThreePlayer);
+                    NPCPlayerAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
 
                 }
                 if (number >= 20 && number < 40)
                 {
-                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayer, ThreePlayer);
+                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
                 }
                 if (number < 20)
                 {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                     currentPlayer.Heal();
                 }
             }
@@ -651,16 +651,17 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             {
                 if (number >= 60)
                 {
-                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayer, ThreePlayer);
+                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
                 }
                 if (number >= 30 && number < 60)
                 {
-                    NPCPlayerAttacking(rnd, enemyList, currentPlayer, TwoPlayer, ThreePlayer);
+                    NPCPlayerAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
 
                 }
                 if (number < 30)
                 {
-
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                     currentPlayer.Heal();
                 }
             }
@@ -668,11 +669,15 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             {
                 if (number >= 15)
                 {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                     currentPlayer.Heal();
                 }
                 if (number < 15)
                 {
-                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayer, ThreePlayer);
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
                 }
             }
 
