@@ -81,7 +81,7 @@ namespace ConsoleGame
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("########################################################");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("{3} Conducts on special attack {1} on {0} dealing {2} damage", player.Name, attackName, attackVal, Name);
+            Console.WriteLine("{3} Conducts the special attack {1} on {0} dealing {2} damage", player.Name, attackName, attackVal, Name);
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("########################################################");
             Console.ForegroundColor = ConsoleColor.White;

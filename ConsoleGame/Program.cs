@@ -7,6 +7,20 @@ namespace ConsoleGame
 {
     class Program
     {
+        /*
+            Welcome to the Code of DURF created by Tyler Vermilion and the Movement and map by Chris Sullivan
+            Feel free to use parts of this for inspiration or for your own project.
+            Dislaimer however, this code is by far not the cleanest it could have been and needs to be redone sometime.
+            By the time you read this I should have added comments explaining each part of the application.
+            
+            Check out my Github here: https://github.com/MTVExtreme || Portfoilio: https://mtvextreme.github.io/
+            Check out my Linked.In here: https://www.linkedin.com/in/michael-vermillion-0121a412a/
+
+            Thanks for taking your time to read my code and to play my Console Game.
+
+            If you see any bugs in my code you may contact me about them, or you may fix it yourself and issue a pull request.
+            I may go back later and remake the project in a much cleaner way once I have spare time and have more expirence.
+        */
         #region Public Variables
         public static PlayerClass player1;
         public static PlayerClass player2;
@@ -17,8 +31,8 @@ namespace ConsoleGame
 
         protected static bool HasLost;
 
-
-        public static string Version = "0.10.03";
+        //Current Version Displayed in game. This is purely a string and for informal tracking of the current version of the game.
+        public static string Version = "0.12.16";
         #endregion
         static void Main(string[] args)
         {
@@ -203,8 +217,9 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                         if (reTry == 1)
                         {
                             Console.WriteLine("Input Confirmed. Remaking Player");
+                            Thread.Sleep(1500);
                         }
-                        else Console.WriteLine("Invalid Input Remaking Player");
+                        else Console.WriteLine("Invalid Input Remaking Player"); Thread.Sleep(1500);
                     }
 
                 }
@@ -358,15 +373,15 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             }
 
             enemyList.ElementAt(0).Value.ID = 3;
-            if (enemies > 2)
+            if (enemies >= 2)
             {
                 enemyList.ElementAt(1).Value.ID = 4;
             }
-            if (enemies > 3)
+            if (enemies >= 3)
             {
                 enemyList.ElementAt(2).Value.ID = 5;
             }
-            if (enemies > 4)
+            if (enemies >= 4)
             {
                 enemyList.ElementAt(3).Value.ID = 6;
             }
@@ -390,9 +405,19 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                 string playerTurn;
                 int id = combatant.Key.ID;
 
+                //Checks for winning/Losing battle
+                battle = CheckLoseBattle(TwoPlayers, ThreePlayers, battle);
+                battle = CheckWinBattle(battle, enemyList);
+                if (battle == false) break;
 
+                if (combatant.Key.HealthPoints <= 0)
+                {
+                    combatant.Key.IsDead = true;
+                    Console.WriteLine("{0} Is Dead and cannot make a move", combatant.Key.Name);
+                    Console.ReadLine();
+                }
                 //NPC Actions
-                if (combatant.Key.NPC == true && combatant.Key.HealthPoints > 0)
+                else if (combatant.Key.NPC == true && combatant.Key.HealthPoints > 0)
                 {
                     //Enemy Random Decision
                     if (id > 2 && id < 7)
@@ -402,21 +427,21 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                         RandomEnemy currentEnemy = (RandomEnemy)combatant.Key;
                         if (currentEnemy.HealthPoints >= (currentEnemy.MaxHealthPoints * .7))
                         {
-                            EnemyHighHPDecision(rnd, enemyList, number, currentEnemy);
+                            EnemyHighHPDecision(rnd, enemyList, number, currentEnemy, TwoPlayers, ThreePlayers);
                         }
                         if (currentEnemy.HealthPoints <= (currentEnemy.MaxHealthPoints * .5))
                         {
-                            EnemyMidHPDecision(rnd, enemyList, number, currentEnemy);
+                            EnemyMidHPDecision(rnd, enemyList, number, currentEnemy, TwoPlayers, ThreePlayers);
                         }
                         if (currentEnemy.HealthPoints <= (currentEnemy.MaxHealthPoints * .3))
                         {
-                            EnemyLowHPDecision(rnd, enemyList, number, currentEnemy);
+                            EnemyLowHPDecision(rnd, enemyList, number, currentEnemy, TwoPlayers, ThreePlayers);
                         }
                     }
                     //AI Ally Random Decision
                     if (id < 3 && id > 0)
                     {
-                        NPCRandomAction(rnd, enemyList, combatant);
+                        NPCRandomAction(rnd, enemyList, combatant, TwoPlayers, ThreePlayers);
                     }
 
                 }
@@ -443,22 +468,18 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                     }
                 }
                 //If Combatant is Dead
-                else if (combatant.Key.HealthPoints <= 0)
-                {
-                    combatant.Key.IsDead = true;
-                    Console.WriteLine("{0} Is Dead and cannot make a move", combatant.Key.Name);
-                    Console.ReadLine();
-                }
+    
                 //Failed
                 else
                 {
                     throw new FormatException();
                 }
+
+
             }
+            
 
-            battle = CheckWinBattle(battle, enemyList);
-
-            battle = CheckLoseBattle(TwoPlayers, ThreePlayers, battle);
+            
             return battle;
         }
 
@@ -498,76 +519,85 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         }
 
         //Enemy Low Hp Decision
-        private static void EnemyLowHPDecision(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, int number, RandomEnemy currentEnemy)
+        private static void EnemyLowHPDecision(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, int number, RandomEnemy currentEnemy, bool TwoPlayers, bool ThreePlayers)
         {
             if (number >= 30)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.Heal();
             }
             if (number < 30)
             {
-                EnemySpecialAttacking(rnd, enemyList, currentEnemy);
-                Console.ReadLine();
+                EnemySpecialAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
             }
         }
 
         //Enemy Mid Hp Decision
-        private static void EnemyMidHPDecision(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, int number, RandomEnemy currentEnemy)
+        private static void EnemyMidHPDecision(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, int number, RandomEnemy currentEnemy, bool TwoPlayers, bool ThreePlayers)
         {
             if (number >= 60)
             {
-                EnemySpecialAttacking(rnd, enemyList, currentEnemy);
-                Console.ReadLine();
+                EnemySpecialAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
             }
             if (number >= 30 && number < 60)
             {
-                EnemyAttacking(rnd, enemyList, currentEnemy);
+                EnemyAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
 
 
             }
             if (number < 30)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.Heal();
             }
         }
 
         //Enemy High Hp Decision
-        private static void EnemyHighHPDecision(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, int number, RandomEnemy currentEnemy)
+        private static void EnemyHighHPDecision(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, int number, RandomEnemy currentEnemy, bool TwoPlayers, bool ThreePlayers)
         {
             if (number >= 40)
             {
-                EnemyAttacking(rnd, enemyList, currentEnemy);
+                EnemyAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
             }
             if (number >= 20 && number < 40)
             {
-                EnemySpecialAttacking(rnd, enemyList, currentEnemy);
-                Console.ReadLine();
+                EnemySpecialAttacking(rnd, enemyList, currentEnemy, TwoPlayers, ThreePlayers);
             }
             if (number < 20)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.Heal();
             }
         }
 
         //Goes over Enemy's Normal Attack
-        private static void EnemyAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
+        private static void EnemyAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy, bool TwoPlayers, bool ThreePlayers)
         {
             int num = rnd.GetNext(0, PlayerCount - 1);
 
 
             if (num == 0)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.RandomAttack(player1);
                 Console.ReadLine();
             }
             else if (num == 1)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.RandomAttack(player2);
                 Console.ReadLine();
 
             }
             else if (num == 2)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.RandomAttack(player3);
                 Console.ReadLine();
 
@@ -576,24 +606,30 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         }
 
         //Goes over Enemy's Special Attack
-        private static void EnemySpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy)
+        private static void EnemySpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy, bool TwoPlayers, bool ThreePlayers)
         {
             int num = rnd.GetNext(0, PlayerCount);
 
 
             if (num == 0)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.RandomSpecialAttack(player1);
                 Console.ReadLine();
             }
             else if (num == 1)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.RandomSpecialAttack(player2);
                 Console.ReadLine();
 
             }
             else if (num == 2)
             {
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentEnemy.RandomSpecialAttack(player3);
                 Console.ReadLine();
 
@@ -602,25 +638,26 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         }
 
         //AI NPC Partner Actions
-        private static void NPCRandomAction(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant)
+        private static void NPCRandomAction(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, KeyValuePair<Character, int> combatant, bool TwoPlayers, bool ThreePlayers)
         {
             int number = rnd.GetNext(1, 100);
-            int num;
             PlayerClass currentPlayer = (PlayerClass)combatant.Key;
 
             if (currentPlayer.HealthPoints >= (currentPlayer.MaxHealthPoints * .5))
             {
                 if (number >= 40)
                 {
-                    num = NPCPlayerAttacking(rnd, enemyList, currentPlayer);
+                    NPCPlayerAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
 
                 }
                 if (number >= 20 && number < 40)
                 {
-                    num = NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer);
+                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
                 }
                 if (number < 20)
                 {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                     currentPlayer.Heal();
                 }
             }
@@ -628,15 +665,17 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             {
                 if (number >= 60)
                 {
-                    num = NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer);
+                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
                 }
                 if (number >= 30 && number < 60)
                 {
-                    num = NPCPlayerAttacking(rnd, enemyList, currentPlayer);
+                    NPCPlayerAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
 
                 }
                 if (number < 30)
                 {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                     currentPlayer.Heal();
                 }
             }
@@ -644,94 +683,122 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             {
                 if (number >= 15)
                 {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                     currentPlayer.Heal();
                 }
                 if (number < 15)
                 {
-                    num = NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer);
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    NPCPlayerSpecialAttacking(rnd, enemyList, currentPlayer, TwoPlayers, ThreePlayers);
                 }
             }
 
         }
 
         //Friendly Parnter Special Attacking
-        private static int NPCPlayerSpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
+        private static void NPCPlayerSpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool TwoPlayer, bool ThreePlayer)
         {
-            int num = rnd.GetNext(1, EnemyCount);
-            int atk;
-            if (num == 1)
+            bool loop = true;
+            while (loop == true)
             {
-                atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy0"], atk, currentPlayer.SpecialAttacks, enemyList["enemy0"].Name);
-                Console.ReadLine();
-            }
-            else if (num == 2)
-            {
-                atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy1"], atk, currentPlayer.SpecialAttacks, enemyList["enemy1"].Name);
-                Console.ReadLine();
+                int num = rnd.GetNext(1, EnemyCount);
+                int atk;
+                if (num == 1)
+                {
+                    atk = SpecialAttackSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayer, ThreePlayer);
+                }
+                else if (num == 2)
+                {
+                    atk = SpecialAttackSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayer, ThreePlayer);
+
+                }
+                else if (num == 3)
+                {
+                    atk = SpecialAttackSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayer, ThreePlayer);
+                }
+                else if (num == 4)
+                {
+                    atk = SpecialAttackSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayer, ThreePlayer);
+                }
+                else
+                {
+                    Console.WriteLine("This is Not supposed to happen");
+                }
 
             }
-            else if (num == 3)
+
+        }
+
+        private static int SpecialAttackSpecificEnemy(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, ref bool loop, int num, bool TwoPlayers, bool ThreePlayers)
+        {
+            int atk = rnd.GetNext(0, 2);
+            if (enemyList["enemy" + (num - 1)].IsDead == false)
             {
-                atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy2"], atk, currentPlayer.SpecialAttacks, enemyList["enemy2"].Name);
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                currentPlayer.SpecialAttack(enemyList["enemy" + (num - 1)], atk, currentPlayer.SpecialAttacks, enemyList["enemy" + (num - 1)].Name);
+                loop = false;
                 Console.ReadLine();
-            }
-            else if (num == 4)
-            {
-                atk = rnd.GetNext(0, 2);
-                currentPlayer.SpecialAttack(enemyList["enemy3"], atk, currentPlayer.SpecialAttacks, enemyList["enemy3"].Name);
-                Console.ReadLine();
-            }
-            else
-            {
-                Console.WriteLine("This is Not supposed to happen");
             }
 
-            return num;
+            return atk;
         }
 
         //Friendly Parnter Normal Attacking
-        private static int NPCPlayerAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer)
+        private static void NPCPlayerAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool TwoPlayers, bool ThreePlayers)
         {
-            int num = rnd.GetNext(1, EnemyCount);
-            int atk;
 
-            if (num == 1)
+
+            bool loop = true;
+            while (loop == true)
             {
-                num = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy0"], num, enemyList["enemy0"].Name);
-                Console.ReadLine();
+                int num = rnd.GetNext(1, EnemyCount);
+                int atk;
+
+                if (num == 1)
+                {
+                    atk = AttackingSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayers, ThreePlayers);
+                }
+                else if (num == 2)
+                {
+                    atk = AttackingSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayers, ThreePlayers);
+
+                }
+                else if (num == 3)
+                {
+                    atk = AttackingSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayers, ThreePlayers);
+
+                }
+                else if (num == 4)
+                {
+                    atk = AttackingSpecificEnemy(rnd, enemyList, currentPlayer, ref loop, num, TwoPlayers, ThreePlayers);
+
+                }
+                else
+                {
+                    Console.WriteLine("This is Not supposed to happen");
+                    Console.ReadLine();
+                }
             }
-            else if (num == 2)
+
+            
+        }
+
+        private static int AttackingSpecificEnemy(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, ref bool loop, int num, bool TwoPlayers, bool ThreePlayers)
+        {
+            int atk = rnd.GetNext(0, 4);
+            if (enemyList["enemy" + (num - 1)].IsDead == false)
             {
-                atk = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy1"], atk, enemyList["enemy1"].Name);
-                Console.ReadLine();
-
-            }
-            else if (num == 3)
-            {
-                atk = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy2"], atk, enemyList["enemy2"].Name);
-                Console.ReadLine();
-
-            }
-            else if (num == 4)
-            {
-                atk = rnd.GetNext(0, 4);
-                currentPlayer.Attack(enemyList["enemy3"], atk, enemyList["enemy3"].Name);
-                Console.ReadLine();
-
-            }
-            else
-            { 
-                Console.WriteLine("This is Not supposed to happen");
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                currentPlayer.Attack(enemyList["enemy" + (num - 1)], atk, enemyList["enemy" + (num - 1)].Name);
+                loop = false;
                 Console.ReadLine();
             }
 
-            return num;
+            return atk;
         }
 
         //Runs the Human Player Combat Section
@@ -785,12 +852,12 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                                     Console.ForegroundColor = ConsoleColor.White;
                                     //attacker = Int32.Parse(Console.ReadLine());
-                                    if (Int32.TryParse(Console.ReadLine(), out attacker) && num >= 0 && num <= enemyList.Count)
+                                    if (Int32.TryParse(Console.ReadLine(), out attacker) && attacker >= 0 && attacker <= enemyList.Count)
                                     {
-                                        running = Attacking(enemyList, currentPlayer, running, attacker, num);
+                                        running = Attacking(enemyList, currentPlayer, running, attacker, num, TwoPlayers, ThreePlayers);
                                         break;
                                     }
-                                    
+
                                 }
                                 break;
                                 #endregion
@@ -806,7 +873,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                         while (true)
                         {
                             int attacker;
-                           
+
 
                             currentPlayer.ReadSpecialAttacks();
                             int num;
@@ -824,9 +891,9 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                                         x++;
                                     }
                                     Console.ForegroundColor = ConsoleColor.White;
-                                    if (Int32.TryParse(Console.ReadLine(), out attacker) && num >= 0 && num <= enemyList.Count)
+                                    if (Int32.TryParse(Console.ReadLine(), out attacker) && attacker >= 0 && attacker <= enemyList.Count)
                                     {
-                                        running = SpecialAttacking(enemyList, currentPlayer, running, num, attacker);
+                                        running = SpecialAttacking(enemyList, currentPlayer, running, num, attacker, TwoPlayers, ThreePlayers);
                                         break;
                                     }
                                 }
@@ -841,6 +908,8 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                     }
                     else if (value == 2)
                     {
+                        Console.Clear();
+                        DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                         currentPlayer.Heal();
                         running = false;
 
@@ -852,34 +921,42 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         }
 
         //Runs the Human Player Special Attacking Section
-        private static bool SpecialAttacking(Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool running, int num, int attacker)
+        private static bool SpecialAttacking(Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool running, int num, int attacker, bool TwoPlayers, bool ThreePlayers)
         {
-            if (attacker == 0)
+            if (attacker == 0 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy0"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
                 Console.ReadLine();
                 running = false;
             }
 
-            if (attacker == 1)
+            if (attacker == 1 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy1"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
                 Console.ReadLine();
                 running = false;
             }
 
-            if (attacker == 2)
+            if (attacker == 2 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy2"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
                 Console.ReadLine();
                 running = false;
             }
-            if (attacker == 3)
+            if (attacker == 3 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy3"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.SpecialAttack(val, num, currentPlayer.SpecialAttacks, val.Name);
                 Console.ReadLine();
                 running = false;
@@ -889,35 +966,43 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         }
 
         //Runs the Human Player Normal Attacking Section
-        private static bool Attacking(Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool running, int attacker, int num)
+        private static bool Attacking(Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, bool running, int attacker, int num, bool TwoPlayers, bool ThreePlayers)
         {
-            if (attacker == 0)
+            if (attacker == 0 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy0"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.Attack(val, num, val.Name);
                 Console.ReadLine();
                 running = false;
             }
 
-            if (attacker == 1)
+            if (attacker == 1 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy1"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.Attack(val, num, val.Name);
                 Console.ReadLine();
                 running = false;
             }
 
-            if (attacker == 2)
+            if (attacker == 2 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy2"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.Attack(val, num, val.Name);
                 Console.ReadLine();
                 running = false;
             }
 
-            if (attacker == 3)
+            if (attacker == 3 && enemyList["enemy" + attacker] != null && enemyList["enemy" + attacker].IsDead != true)
             {
                 var val = enemyList["enemy3"];
+                Console.Clear();
+                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
                 currentPlayer.Attack(val, num, val.Name);
                 Console.ReadLine();
                 running = false;
@@ -956,7 +1041,6 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
             List<KeyValuePair<Character, int>> combatOrder = order.ToList();
 
-            //var combatOrder = order.ToList();
 
             combatOrder.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
 
@@ -1021,6 +1105,17 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
             if (EnemyCount == 3)
             {
                 if (enemyList["enemy0"].IsDead == true && enemyList["enemy1"].IsDead && enemyList["enemy2"].IsDead)
+                {
+                    Console.WriteLine("Congrats! You have Defeated the Enemies!");
+                    Console.ReadLine();
+
+                    battle = false;
+
+                }
+            }
+            if (EnemyCount == 4)
+            {
+                if (enemyList["enemy0"].IsDead == true && enemyList["enemy1"].IsDead && enemyList["enemy2"].IsDead && enemyList["enemy3"].IsDead)
                 {
                     Console.WriteLine("Congrats! You have Defeated the Enemies!");
                     Console.ReadLine();
