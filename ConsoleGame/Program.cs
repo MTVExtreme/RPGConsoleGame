@@ -32,7 +32,7 @@ namespace ConsoleGame
         protected static bool HasLost;
 
         //Current Version Displayed in game. This is purely a string and for informal tracking of the current version of the game.
-        public static string Version = "0.12.16";
+        public static string Version = "0.13.02";
         #endregion
         static void Main(string[] args)
         {
@@ -103,7 +103,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                 if (Int32.TryParse(Console.ReadLine(), out input))
                 {
-                    if (input < 4 && input >= 0)
+                    if (input <= 4 && input >= 0)
                     {
                         break;
                     }
@@ -468,7 +468,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                     }
                 }
                 //If Combatant is Dead
-    
+
                 //Failed
                 else
                 {
@@ -477,9 +477,9 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
 
             }
-            
 
-            
+
+
             return battle;
         }
 
@@ -576,31 +576,38 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         //Goes over Enemy's Normal Attack
         private static void EnemyAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy, bool TwoPlayers, bool ThreePlayers)
         {
-            int num = rnd.GetNext(0, PlayerCount - 1);
-
-
-            if (num == 0)
+            bool loop = true;
+            while (loop == true)
             {
-                Console.Clear();
-                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                currentEnemy.RandomAttack(player1);
-                Console.ReadLine();
-            }
-            else if (num == 1)
-            {
-                Console.Clear();
-                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                currentEnemy.RandomAttack(player2);
-                Console.ReadLine();
+                int num = rnd.GetNext(0, PlayerCount - 1);
 
-            }
-            else if (num == 2)
-            {
-                Console.Clear();
-                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                currentEnemy.RandomAttack(player3);
-                Console.ReadLine();
 
+                if (num == 0 && player1.HealthPoints > 0)
+                {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    currentEnemy.RandomAttack(player1);
+                    loop = false;
+                    Console.ReadLine();
+                }
+                else if (num == 1 && player2.HealthPoints > 0)
+                {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    currentEnemy.RandomAttack(player2);
+                    loop = false;
+                    Console.ReadLine();
+
+                }
+                else if (num == 2 && player3.HealthPoints > 0)
+                {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    currentEnemy.RandomAttack(player3);
+                    loop = false;
+                    Console.ReadLine();
+
+                }
             }
 
         }
@@ -608,31 +615,38 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
         //Goes over Enemy's Special Attack
         private static void EnemySpecialAttacking(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, RandomEnemy currentEnemy, bool TwoPlayers, bool ThreePlayers)
         {
-            int num = rnd.GetNext(0, PlayerCount);
-
-
-            if (num == 0)
+            bool loop = true;
+            while (loop == true)
             {
-                Console.Clear();
-                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                currentEnemy.RandomSpecialAttack(player1);
-                Console.ReadLine();
-            }
-            else if (num == 1)
-            {
-                Console.Clear();
-                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                currentEnemy.RandomSpecialAttack(player2);
-                Console.ReadLine();
+                int num = rnd.GetNext(0, PlayerCount - 1);
 
-            }
-            else if (num == 2)
-            {
-                Console.Clear();
-                DisplayStats(TwoPlayers, ThreePlayers, enemyList);
-                currentEnemy.RandomSpecialAttack(player3);
-                Console.ReadLine();
 
+                if (num == 0 && player1.HealthPoints > 0)
+                {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    currentEnemy.RandomSpecialAttack(player1);
+                    loop = false;
+                    Console.ReadLine();
+                }
+                else if (num == 1 && player2.HealthPoints > 0)
+                {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    currentEnemy.RandomSpecialAttack(player2);
+                    loop = false;
+                    Console.ReadLine();
+
+                }
+                else if (num == 2 && player3.HealthPoints > 0)
+                {
+                    Console.Clear();
+                    DisplayStats(TwoPlayers, ThreePlayers, enemyList);
+                    currentEnemy.RandomSpecialAttack(player3);
+                    loop = false;
+                    Console.ReadLine();
+
+                }
             }
 
         }
@@ -783,7 +797,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                 }
             }
 
-            
+
         }
 
         private static int AttackingSpecificEnemy(AdvancedRNG rnd, Dictionary<string, RandomEnemy> enemyList, PlayerClass currentPlayer, ref bool loop, int num, bool TwoPlayers, bool ThreePlayers)
