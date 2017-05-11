@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Threading;
 
 namespace ConsoleGame
@@ -26,13 +27,16 @@ namespace ConsoleGame
         public static PlayerClass player2;
         public static PlayerClass player3;
 
+        static SoundPlayer JohnCena = new SoundPlayer();
+        
+
         protected static int EnemyCount;
         protected static int PlayerCount;
 
         protected static bool HasLost;
 
         //Current Version Displayed in game. This is purely a string and for informal tracking of the current version of the game.
-        public static string Version = "0.13.02";
+        public static string Version = "0.13.09";
         #endregion
         static void Main(string[] args)
         {
@@ -65,6 +69,7 @@ namespace ConsoleGame
         //Banner and Main Menu
         private static int WelcomeScreen()
         {
+            
             int input;
             while (true)
             {
@@ -201,10 +206,23 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
 
                     Console.Clear();
 
-
-                    Console.WriteLine("Your player name is : {0}\nFrom the faction/guild: {1}\nAnd their class is: {2}\nDo you want to change this?", name, faction, type);
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("|--Type 0 for no. | Type 1 for yes.--|");
+                    Console.WriteLine("|-- Character Confirmation Page --|");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (name == "John Cena")
+                    {
+                        JohnCena.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + @"\Sound\Cena.wav";
+                        JohnCena.Play();
+
+                        Console.Write("And his name is ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("John Cena!!!\n\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine("From the faction/guild: {0}\n\nAnd their class is: {1}\n\nWould you like to change this?\n", faction, type);
+                    }
+                    else Console.WriteLine("Your player name is : {0}\n\nFrom the faction/guild: {1}\n\nAnd their class is: {2}\n\nWould you like to change this?\n", name, faction, type);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("|--Type 0 to move on. | Type 1 to remake character.--|");
                     Console.ForegroundColor = ConsoleColor.White;
                     if (Int32.TryParse(Console.ReadLine(), out reTry))
                     {
@@ -856,6 +874,7 @@ DDDDDDDDDDDDD              UUUUUUUUU      RRRRRRRR     RRRRRRRFFFFFFFFFFF       
                                 while (true)
                                 {
                                     Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                    x = 0;
 
                                     Console.WriteLine("Pick an Enemy: ");
                                     foreach (var count in enemyList)

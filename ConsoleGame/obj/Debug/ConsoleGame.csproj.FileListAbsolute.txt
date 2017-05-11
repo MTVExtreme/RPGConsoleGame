@@ -10,3 +10,4 @@ C:\Users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\bin
 C:\Users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.csprojResolveAssemblyReference.cache
 C:\Users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.exe
 C:\Users\mtv19\documents\visual studio 2017\Projects\ConsoleGame\ConsoleGame\obj\Debug\ConsoleGame.pdb
+C:\Users\mtv19\Documents\Visual Studio 2017\Projects\ConsoleGame\ConsoleGame\bin\Debug\Sound\Cena.wav
